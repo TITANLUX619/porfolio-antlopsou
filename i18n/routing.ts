@@ -1,17 +1,8 @@
-import { defineRouting } from 'next-intl/routing';
-import { createSharedPathnamesNavigation } from 'next-intl/navigation';
+export const locales = ["es", "en"] as const;
+export type Locale = (typeof locales)[number];
+export const defaultLocale: Locale = "es";
+export const siteOrigin = "https://porfolio-antlopsou.vercel.app";
 
-export const routing = defineRouting({
-  // A list of all locales that are supported
-  locales: ['en', 'es'],
-
-  // Used when no locale matches
-  defaultLocale: 'en',
-});
-
-export type Locale = (typeof routing.locales)[number];
-
-// Lightweight wrappers around Next.js' navigation APIs
-// that will consider the routing configuration
-export const { Link, redirect, usePathname, useRouter } =
-  createSharedPathnamesNavigation(routing);
+export function isLocale(value: string): value is Locale {
+  return locales.some((locale) => locale === value);
+}
