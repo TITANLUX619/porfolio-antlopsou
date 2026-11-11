@@ -34,6 +34,15 @@ Estas cifras corresponden a la revisión `f3a8c0e`. La conversión a solicitudes
 
 ## Revisión editorial del 12 de noviembre de 2026
 
-La portada y las fichas comparten un fondo fijo con dos encuadres, uno para móvil y otro para escritorio. La dirección visual toma como referencia la alternancia de fotografía a toda anchura y secciones tipográficas de la [web de Inditex](https://www.inditex.com/itxcomweb/es/es/home). La imagen del portfolio se creó para este proyecto a partir de la geometría de las Setas de Sevilla.
+La portada y las fichas comparten un fondo fijo con dos encuadres. La dirección visual toma como referencia la alternancia de imagen a toda anchura y secciones tipográficas de la [web de Inditex](https://www.inditex.com/itxcomweb/es/es/home). Usamos la foto original como referencia de cámara en ImageGen para convertir sus curvas en láminas de grafito y vidrio azul. La carcasa cálida del CRT recibe más luz y proyecta una sombra independiente sobre el fondo frío.
+
+<details>
+<summary>Referencia, prompt y fondos publicados</summary>
+
+Edición con la herramienta integrada ImageGen a partir del [fondo anterior](public/art/sevilla-canopy.webp). Exportaciones para [escritorio](public/art/optical-ribbon.webp) y [móvil](public/art/optical-ribbon-mobile.webp).
+
+> Reinterpret the attached background as a technological macro photograph. Keep the exact low upward camera angle, 16:9 framing, broad sweeping curve through the middle, deep shadow on the left and the vanishing point low on the right. Replace the wooden waffle, intersecting square grid, columns and sky with a continuous folded ribbon of graphite micro-lamellae and smoked sapphire glass, etched with fine parallel optical traces. Make the geometry read as a close-up of a fabricated electronic material, with no identifiable building or landmark. Midnight ink-blue, cool slate and a little muted periwinkle grazing light; keep the middle-right calm and dark behind a separate warm beige CRT to be added in the webpage. Tactile, finely machined, understated editorial lighting. No letters, symbols, interface, computers, people or bright neon. Full bleed.
+
+</details>
 
 La experiencia de Inditex y Mercedes-Benz procede de los CV del 11 de noviembre. Se publicaron los dos PDF originales y se cotejaron sus huellas SHA-256 con los archivos de origen. La interfaz mantiene una respuesta visible al puntero cuando el sistema pide movimiento reducido y permite activar las animaciones para este sitio.

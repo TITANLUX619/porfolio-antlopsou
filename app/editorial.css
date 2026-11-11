@@ -1,18 +1,18 @@
-/* A single stationary photograph sits behind every route. Content scrolls normally. */
-body { isolation: isolate; background-color: #151912; }
+/* The same fixed field of optical lamellae runs through every editorial spread. */
+body { isolation: isolate; background-color: #0c111b; }
 .site-backdrop {
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: #191a13 url("/art/sevilla-canopy.webp") 56% center / cover no-repeat;
+  background: #0c111b url("/art/optical-ribbon.webp") 56% center / cover no-repeat;
 }
 .site-backdrop::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(95deg, #070c09c2 0%, #0b0f0b85 34%, #10130e37 73%),
-    linear-gradient(0deg, #080c09a6, transparent 51%);
+  background: linear-gradient(95deg, #03091382, #050b172f 42%, transparent 72%),
+    linear-gradient(0deg, #040813a3, transparent 57%);
 }
 html { scroll-padding-top: 5.25rem; }
 .site-header { position: sticky; top: 0; z-index: 6; }
@@ -39,12 +39,18 @@ html { scroll-padding-top: 5.25rem; }
 .hero-location { color: #f2f4e9; }
 .hero-kicker { color: #e0f9b5; }
 .hero-figure { position: relative; }
-:root[data-theme] .hero .figure-surface { background: transparent; }
+:root[data-theme] .hero .figure-surface {
+  background: radial-gradient(ellipse 55% 55% at 53% 53%, #050c19db 32%, #050c19b0 58%, #060b1745 80%, transparent 100%);
+}
 .hero .hero-terminal {
   mix-blend-mode: normal;
   mask: url("/art/terminal-mask.svg") center / contain no-repeat;
 }
-.hero .crt-art { filter: drop-shadow(0 18px 15px #05080691); }
+.hero .crt-art {
+  filter: brightness(1.42) contrast(.93) saturate(.74)
+    drop-shadow(1px -1px 1.5px #dae6ffa6) drop-shadow(0 6px 4px #01040bcc)
+    drop-shadow(0 18px 18px #010510db);
+}
 .hero .art-dots { opacity: .22; }
 .hero .cross { color: #e2e6d299; }
 .hero figure figcaption { border-top: 1px solid #f1f3d642; padding: .72rem 0 .1rem; margin: .6rem .4rem 0; }
@@ -80,7 +86,7 @@ html { scroll-padding-top: 5.25rem; }
 .project-sheet .project-art { border-radius: 3px; }
 .project-sheet .project-body h3 { font-size: clamp(1.7rem, 2.6vw, 2.75rem); }
 .project-sheet .project-card:first-child .project-body h3 { font-size: clamp(2.3rem, 3.7vw, 4rem); }
-.service-window { background: linear-gradient(90deg, #0a110dda 5%, #11180edb 42%, #15191233 90%); }
+.service-window { background: linear-gradient(90deg, #080d17cf 5%, #0b1220d6 42%, #0f162737 90%); }
 .service-layout {
   display: grid; grid-template-columns: .86fr 1.14fr; align-items: start;
   gap: clamp(2.5rem, 8vw, 9rem); padding-block: clamp(4.5rem, 10vw, 10rem);
@@ -102,7 +108,7 @@ html { scroll-padding-top: 5.25rem; }
 .experience article .client-role { color: var(--fg); font-weight: 640; font-size: .93rem; margin-bottom: .55rem; }
 .cv-downloads { display: flex; flex-wrap: wrap; gap: .55rem; }
 .cv-downloads .button { border-radius: 4px; font-size: .85rem; padding-inline: .95rem; }
-.site-footer.photo-window { background: linear-gradient(90deg,#0d120de6,#151912a6); border-color: #8e998458; }
+.site-footer.photo-window { background: linear-gradient(90deg,#090e18dc,#111828ad); border-color: #a5b1c158; }
 .site-footer .contact-row { min-height: min(62svh, 570px); }
 .site-footer .brand-dot { color: var(--accent); }
 .site-footer .footer-base { border-color: #c9d0bc65; }
@@ -141,8 +147,8 @@ html { scroll-padding-top: 5.25rem; }
 }
 @media (max-width: 750px) {
   html { scroll-padding-top: 4.8rem; }
-  .site-backdrop { background-image: url("/art/sevilla-canopy-mobile.webp"); background-position: 62% center; }
-  .site-backdrop::after { background: linear-gradient(115deg,#10140cf2 0%,#11160f98 38%,#14180f55 74%), linear-gradient(0deg,#080d08ab,transparent 70%); }
+  .site-backdrop { background-image: url("/art/optical-ribbon-mobile.webp"); background-position: 62% center; }
+  .site-backdrop::after { background: linear-gradient(105deg,#070c16bf, #0910206b 52%, #0c13212e 84%), linear-gradient(180deg,#050b132b 18%,#050b1387 41%,#050b1330 61%,#04091366 100%); }
   .header-inner { min-height: 62px; }
   .hero-inner { min-height: 0; gap: 1rem; padding-block: 2.75rem 1.25rem; }
   .hero h1 { font-size: clamp(3.75rem, 12.4vw, 6.3rem); }
@@ -160,7 +166,7 @@ html { scroll-padding-top: 5.25rem; }
   .project-sheet .project-card:not(:first-child) .project-summary { font-size: .84rem; }
   .project-sheet .section-title, .spread-heading .section-title { font-size: clamp(2.75rem, 9.5vw, 4rem); }
   .service-layout { gap: .7rem; }
-  .service-window { background: linear-gradient(90deg,#0c130fce,#131810a8); }
+  .service-window { background: linear-gradient(90deg,#090e18cb,#0e1525a6); }
   .service-layout .service-grid article { padding-block: 1rem 1.2rem; }
   .site-footer .contact-row { min-height: 0; }
   .case-main.shell { width: calc(100% - 1.4rem); padding-inline: 1rem; margin-block: 1.4rem; }
