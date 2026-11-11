@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale, locales, siteOrigin } from "@/i18n/routing";
+import { motionStorageKey, reducedMotionQuery } from "@/lib/motion";
 import "../globals.css";
 
 const name = "Antonio López Soult";
@@ -53,9 +54,22 @@ export async function generateMetadata({ params }: LocaleParams): Promise<Metada
   };
 }
 
-const restoreTheme = `try {
-  if (localStorage.getItem("theme") === "light") document.documentElement.dataset.theme = "light";
-} catch {}`;
+const restorePreferences = `(() => {
+  const root = document.documentElement;
+  const systemMotion = matchMedia("${reducedMotionQuery}");
+  function updateMotion() {
+    let choice;
+    try { choice = localStorage.getItem("${motionStorageKey}"); } catch {}
+    root.dataset.motion = choice === "on" || choice === "off" ? choice : systemMotion.matches ? "off" : "on";
+  }
+  try { if (localStorage.getItem("theme") === "light") root.dataset.theme = "light"; } catch {}
+  updateMotion();
+  systemMotion.addEventListener("change", updateMotion);
+  window.addEventListener("pageshow", updateMotion);
+  window.addEventListener("storage", event => {
+    if (event.key === "${motionStorageKey}" || event.key === null) updateMotion();
+  });
+})();`;
 
 export default async function RootLayout({
   children,
@@ -67,7 +81,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} data-theme="dark" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: restoreTheme }} />
+        <script dangerouslySetInnerHTML={{ __html: restorePreferences }} />
       </head>
       <body>{children}</body>
     </html>

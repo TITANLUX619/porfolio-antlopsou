@@ -2,6 +2,8 @@ import type { CSSProperties } from "react";
 
 const paths = {
   terminal: "m4 5 6.5 6.5L4 18m9 0h7",
+  play: "m7 4 12 8-12 8z",
+  pause: "M8 5v14m8-14v14",
   upRight: "M5 19 19 5M5 5h14v14",
   right: "M4 12h16m-7-7 7 7-7 7",
   down: "M12 4v16m-7-7 7 7 7-7",

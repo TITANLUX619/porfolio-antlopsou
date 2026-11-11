@@ -1,29 +1,35 @@
-.crt-art {
-  position: absolute;
-  inset: 0;
+.crt-art { position: absolute; inset: 0; }
+.crt-glass { position: absolute; inset: 0; width: 94%; height: 100%; margin: auto; pointer-events: none; }
+.crt-session { opacity: var(--screen-on, 0); }
+.crt-boot { opacity: 0; }
+.crt-art:is(:active, [data-pointing], [data-tapped]),
+.hero-figure:has(.studio-launch:focus-visible) .crt-art {
+  --screen-on: 1;
+  --type: crt-type;
+  --print: crt-print;
+  --blink: crt-blink;
 }
-.crt-glass {
-  position: absolute;
-  inset: 0;
-  width: 94%;
-  height: 100%;
-  margin: auto;
-  pointer-events: none;
-}
-.crt-sweep { opacity: 0; }
+@media (hover: hover) { .crt-art:hover { --screen-on: 1; } }
+@media (max-width: 750px) { .crt-glass { width: 91%; } }
 
-@media (max-width: 750px) {
-  .crt-glass { width: 91%; }
+:root[data-motion="on"] .crt-session { transition: opacity 160ms ease-out; }
+:root[data-motion="on"] .crt-type-mask {
+  transform-box: fill-box; transform-origin: left;
+  animation: var(--type, none) .52s steps(13, end) both;
 }
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .crt-art .hero-terminal, .crt-art .crt-glass {
-    translate: var(--crt-shift, none);
-    transition: translate 180ms ease-out;
-  }
-  .crt-art:hover .crt-sweep { animation: crt-phosphor-sweep 760ms ease-out 1; }
-  @keyframes crt-phosphor-sweep {
-    0% { opacity: 0; transform: translateY(0); }
-    16%, 82% { opacity: 1; }
-    100% { opacity: 0; transform: translateY(400px); }
-  }
+:root[data-motion="on"] .crt-entry { animation: var(--print, none) .2s ease-out backwards; }
+:root[data-motion="on"] .crt-cursor { animation: var(--blink, none) .86s steps(1, end) 1s 4; }
+:root[data-motion="on"] .crt-boot { animation: crt-boot 1.22s ease-out .22s both; }
+:root[data-motion="on"] .crt-art .hero-terminal,
+:root[data-motion="on"] .crt-glass {
+  translate: calc(var(--pointer-x, 0) * 9px) calc(var(--pointer-y, 0) * 6px);
+  transition: translate 160ms ease-out;
 }
+@keyframes crt-boot {
+  0% { opacity: 0; transform: translateY(0); }
+  12%, 82% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(436px); }
+}
+@keyframes crt-type { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes crt-print { from { opacity: 0; translate: 0 8px; } to { opacity: 1; translate: 0 0; } }
+@keyframes crt-blink { 50% { opacity: .15; } }

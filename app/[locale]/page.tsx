@@ -4,6 +4,8 @@ import { Header, Footer } from "@/components/SiteChrome";
 import { Glyph, type GlyphName } from "@/components/Glyph";
 import { StackStrip } from "@/components/StackStrip";
 import { CrtArtwork } from "@/components/CrtArtwork";
+import { MotionControl } from "@/components/PortfolioControls";
+import { ProjectCardLink } from "@/components/ProjectCardLink";
 import { StudioTerminal } from "@/components/StudioTerminal";
 import { projects } from "@/data/projects";
 import { isLocale } from "@/i18n/routing";
@@ -13,7 +15,7 @@ const content = {
     role: "Ingeniero de software", city: "Sevilla, España", title: "Código con", accent: "carácter.",
     intro: "Soy Antonio López Soult, desarrollador sénior de React y Next.js. Construyo aplicaciones web y móviles que hacen más sencillo el trabajo de las personas.",
     workCta: "Ver proyectos", contactCta: "Hablemos", art: "Terminal de sobremesa retro con una montaña trazada en verde fósforo sobre la pantalla.",
-    artLabel: "Estudio digital", workLabel: "Portfolio", work: "Trabajo seleccionado", caseLink: "Ver caso",
+    workLabel: "Portfolio", work: "Trabajo seleccionado", caseLink: "Ver caso",
     servicesLabel: "Servicios", services: "Cómo puedo ayudarte",
     offers: [
       ["code", "Web y automatizaciones", "Desarrollo portales y paneles con React y Next.js. Conecto tus herramientas para automatizar tareas repetitivas, como pasar datos de un sistema a otro o enviar avisos."],
@@ -31,7 +33,7 @@ const content = {
     role: "Software engineer", city: "Seville, Spain", title: "Code with", accent: "character.",
     intro: "I’m Antonio López Soult, a senior React and Next.js developer. I build web and mobile apps that make people’s day-to-day work easier.",
     workCta: "Explore my work", contactCta: "Let’s talk", art: "Vintage desktop terminal with a green phosphor wireframe mountain on its screen.",
-    artLabel: "Digital studio", workLabel: "Portfolio", work: "Selected work", caseLink: "View case study",
+    workLabel: "Portfolio", work: "Selected work", caseLink: "View case study",
     servicesLabel: "Services", services: "How I can help",
     offers: [
       ["code", "Web apps and automation", "I build portals and dashboards with React and Next.js. I connect the tools you use to automate repetitive work, such as moving data between systems or sending notifications."],
@@ -71,10 +73,10 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <div className="figure-surface">
               <div className="art-dots" aria-hidden="true" />
               <span className="cross cross-tl" aria-hidden="true"/><span className="cross cross-tr" aria-hidden="true"/>
-              <CrtArtwork alt={t.art} />
+              <CrtArtwork alt={t.art} names={projects.map(project => project.name)} />
               <span className="cross cross-bl" aria-hidden="true"/><span className="cross cross-br" aria-hidden="true"/>
             </div>
-            <figcaption><span className="art-caption"><b aria-hidden="true"/> {t.artLabel}</span><StudioTerminal locale={locale} /></figcaption>
+            <figcaption><MotionControl locale={locale}/><StudioTerminal locale={locale} /></figcaption>
           </figure>
         </div>
       </section>
@@ -83,7 +85,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         <span className="eyebrow"><i />{t.workLabel}</span>
         <h2 id="projects-title" className="section-title">{t.work}<span>.</span></h2>
         <div className="project-grid">{projects.map(project => <article className="project-card" key={project.slug}>
-          <a href={`/${locale}/work/${project.slug}`} aria-label={`${t.caseLink} · ${project.name}`}>
+          <ProjectCardLink href={`/${locale}/work/${project.slug}`} label={`${t.caseLink} · ${project.name}`}>
             <div className={`project-art project-art-${project.slug}`}>
               <div className="shot-frame">
                 {project.slug !== "consultia" && <div className="window-bar" aria-hidden="true"><i/><i/><i/></div>}
@@ -91,12 +93,13 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                   style={{ viewTransitionName: `case-image-${project.slug}` }}
                   sizes="(max-width: 700px) 88vw, (max-width: 1000px) 44vw, 400px"/>
               </div>
+              <span className="case-invitation" aria-hidden="true">{t.caseLink}<Glyph name="upRight" size={15}/></span>
             </div>
             <div className="project-body"><p className="project-category">{project[locale].category}</p>
               <h3>{project.name} <span className="card-link"><Glyph name="upRight" size={20} /></span></h3>
               <p className="project-summary">{project[locale].summary}</p>
             </div>
-          </a>
+          </ProjectCardLink>
         </article>)}</div>
       </section>
       <section id="services" className="section-band" aria-labelledby="services-title"><div className="shell section-block">
