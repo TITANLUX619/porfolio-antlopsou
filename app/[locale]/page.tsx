@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Header, Footer } from "@/components/SiteChrome";
 import { Glyph, type GlyphName } from "@/components/Glyph";
 import { StackStrip } from "@/components/StackStrip";
+import { CrtArtwork } from "@/components/CrtArtwork";
 import { StudioTerminal } from "@/components/StudioTerminal";
 import { projects } from "@/data/projects";
 import { isLocale } from "@/i18n/routing";
@@ -15,7 +16,7 @@ const content = {
     artLabel: "Estudio digital", workLabel: "Portfolio", work: "Trabajo seleccionado", caseLink: "Ver caso",
     servicesLabel: "Servicios", services: "Cómo puedo ayudarte",
     offers: [
-      ["code", "Aplicaciones web", "Desarrollo portales, paneles de gestión y herramientas colaborativas con React y Next.js."],
+      ["code", "Web y automatizaciones", "Desarrollo portales y paneles con React y Next.js. Conecto tus herramientas para automatizar tareas repetitivas, como pasar datos de un sistema a otro o enviar avisos."],
       ["mobile", "Producto móvil", "Llevo las tareas clave de tu producto al móvil con React Native, desde el primer flujo hasta una versión que puedas probar."],
       ["layers", "Evolución de frontend", "Modernizo interfaces existentes, separo funcionalidades y añado pruebas para que tu equipo pueda seguir desarrollando."],
     ],
@@ -33,7 +34,7 @@ const content = {
     artLabel: "Digital studio", workLabel: "Portfolio", work: "Selected work", caseLink: "View case study",
     servicesLabel: "Services", services: "How I can help",
     offers: [
-      ["code", "Web applications", "I build customer portals, dashboards and collaborative tools with React and Next.js."],
+      ["code", "Web apps and automation", "I build portals and dashboards with React and Next.js. I connect the tools you use to automate repetitive work, such as moving data between systems or sending notifications."],
       ["mobile", "Mobile products", "I bring the essential parts of your product to mobile with React Native, from the first user flow to a build you can try."],
       ["layers", "Frontend modernisation", "I modernise existing interfaces, untangle features and add tests so your team can keep shipping."],
     ],
@@ -58,7 +59,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         <div className="shell hero-inner">
           <div className="hero-text">
             <p className="eyebrow hero-kicker"><i />{t.role}</p>
-            <h1 id="hero-title">{t.title}<br /><em>{t.accent}</em></h1>
+            <h1 id="hero-title"><span>{t.title}</span><br /><em>{t.accent}</em></h1>
             <p className="hero-intro">{t.intro}</p>
             <div className="hero-actions">
               <a className="button button-primary" href="#projects">{t.workCta}<Glyph name="down" size={18}/></a>
@@ -70,8 +71,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <div className="figure-surface">
               <div className="art-dots" aria-hidden="true" />
               <span className="cross cross-tl" aria-hidden="true"/><span className="cross cross-tr" aria-hidden="true"/>
-              <Image className="hero-terminal" src="/art/terminal.webp" width={1152} height={864} preload alt={t.art}
-                sizes="(max-width: 750px) 92vw, (max-width: 1400px) 48vw, 630px" />
+              <CrtArtwork alt={t.art} />
               <span className="cross cross-bl" aria-hidden="true"/><span className="cross cross-br" aria-hidden="true"/>
             </div>
             <figcaption><span className="art-caption"><b aria-hidden="true"/> {t.artLabel}</span><StudioTerminal locale={locale} /></figcaption>
@@ -88,6 +88,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               <div className="shot-frame">
                 {project.slug !== "consultia" && <div className="window-bar" aria-hidden="true"><i/><i/><i/></div>}
                 <Image src={`/work/${project.slug}.webp`} alt={project[locale].alt} width={project.width} height={project.height}
+                  style={{ viewTransitionName: `case-image-${project.slug}` }}
                   sizes="(max-width: 700px) 88vw, (max-width: 1000px) 44vw, 400px"/>
               </div>
             </div>

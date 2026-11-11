@@ -102,6 +102,7 @@ export default async function CasePage({ params }: PageProps) {
                 alt={copy.alt}
                 width={project.width}
                 height={project.height}
+                style={{ viewTransitionName: `case-image-${project.slug}` }}
                 unoptimized
                 preload
               />

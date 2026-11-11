@@ -217,10 +217,34 @@ figure, h1, h2, h3, h4, p { margin: 0; }
   .hero h1 { font-size: 3.75rem; }
 }
 @media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+  ::view-transition-group(*) { animation-duration: .32s; animation-timing-function: cubic-bezier(.2,.72,.3,1); }
   html { scroll-behavior: smooth; }
   .hero-terminal { animation: power-on .62s ease-out both; }
   @keyframes power-on { from { filter: brightness(.83); } to { filter: brightness(1); } }
+
+  .hero h1 > span, .hero h1 > em { display: inline-block; animation: type-arrives .64s cubic-bezier(.18,.72,.22,1) backwards; }
+  .hero h1 > em { animation-delay: .09s; }
+  @keyframes type-arrives { from { opacity: .83; transform: translateY(.12em); } to { opacity: 1; transform: translateY(0); } }
+
+  .desktop-nav a { position: relative; }
+  .desktop-nav a::after { content: ""; position: absolute; bottom: 6px; left: 0; right: 0; height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .2s ease-out; }
+  .desktop-nav a:is(:hover,:focus-visible)::after { transform: scaleX(1); }
+
+  .project-art::after { content: ""; position: absolute; inset: -35% -50%; pointer-events: none; background: linear-gradient(110deg, transparent 39%, #fff3 50%, transparent 61%); transform: translateX(-87%); }
+  .project-card a:focus-visible .project-art::after { animation: print-gloss .7s ease-out both; }
+  @media (hover: hover) and (pointer: fine) {
+    .project-card a:hover .project-art::after { animation: print-gloss .7s ease-out both; }
+  }
+  @keyframes print-gloss { to { transform: translateX(87%); } }
+
+  @supports (animation-timeline: view()) and (animation-range: entry 0% entry 100%) {
+    .project-card, .service-grid article { animation: scroll-in auto linear both; animation-timeline: view(); animation-range: entry 0% entry 85%; }
+    @keyframes scroll-in { from { opacity: .9; translate: 0 13px; } to { opacity: 1; translate: 0 0; } }
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: 0s !important; animation-duration: 0s !important; scroll-behavior: auto !important; }
+  .project-card a:is(:hover,:focus-visible) .shot-frame { transform: perspective(900px) rotateY(-6deg) rotateX(3deg); }
+  .project-card a:hover .card-link, .button-primary:hover svg, .text-link:hover svg { transform: none; }
 }

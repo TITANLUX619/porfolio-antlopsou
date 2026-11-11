@@ -1,0 +1,29 @@
+.crt-art {
+  position: absolute;
+  inset: 0;
+}
+.crt-glass {
+  position: absolute;
+  inset: 0;
+  width: 94%;
+  height: 100%;
+  margin: auto;
+  pointer-events: none;
+}
+.crt-sweep { opacity: 0; }
+
+@media (max-width: 750px) {
+  .crt-glass { width: 91%; }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .crt-art .hero-terminal, .crt-art .crt-glass {
+    translate: var(--crt-shift, none);
+    transition: translate 180ms ease-out;
+  }
+  .crt-art:hover .crt-sweep { animation: crt-phosphor-sweep 760ms ease-out 1; }
+  @keyframes crt-phosphor-sweep {
+    0% { opacity: 0; transform: translateY(0); }
+    16%, 82% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(400px); }
+  }
+}
