@@ -9,6 +9,45 @@ import { StudioTerminal } from "@/components/StudioTerminal";
 import { projects } from "@/data/projects";
 import { isLocale } from "@/i18n/routing";
 
+const clientMarks = {
+  inditex: "inditex.svg",
+  "mercedes-benz": "mercedes.svg",
+  santander: "santander.svg",
+  aesa: "aesa.png",
+} as const;
+
+type ClientId = keyof typeof clientMarks;
+
+function ClientMark({ client }: { client: ClientId }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`client-mark client-mark--${client}`}
+      style={{ maskImage: `url("/assets/${clientMarks[client]}")` }}
+    />
+  );
+}
+
+function ClientExperience({ client, name, role, period, description }: {
+  client: ClientId;
+  name: string;
+  role: string;
+  period?: string;
+  description: string;
+}) {
+  return (
+    <article id={client}>
+      {period && <span className="experience-date">{period}</span>}
+      <h4 className="client-heading">
+        <ClientMark client={client} />
+        <span className={client === "inditex" ? "sr-only wordmark-name" : undefined}>{name}</span>
+      </h4>
+      <p className="client-role">{role}</p>
+      <p>{description}</p>
+    </article>
+  );
+}
+
 const content = {
   es: {
     role: "Antonio López Soult · Ingeniero frontend", city: "Sevilla, España", title: "Código con", accent: "carácter.",
@@ -25,7 +64,11 @@ const content = {
     cvGroup: "Descargar el currículum", cvEs: "CV en español", cvEn: "CV en inglés", experience: "Experiencia por cliente final", jobs: [
       ["inditex", "Inditex", "Senior Frontend Engineer", "Nov 2024 — actualidad", "En Customs Clearance e IOP Documentación lidero la arquitectura de microfrontends. Desarrollé la carga masiva de documentos de transporte, con subidas por bloques y validación de archivos."],
       ["mercedes-benz", "Mercedes-Benz", "Ingeniero de software · Frontend", "Jul 2022 — nov 2024", "En CaRT, la herramienta de gestión de incidencias industriales, llevé nuevas funciones desde la toma de requisitos hasta producción. Resolví cuellos de botella que ralentizaban la aplicación para usuarios de distintos países."],
-      ["santander-aesa", "Santander Alemania y AESA", "Ingeniero de software · Frontend", "Ene 2018 — jul 2022", "Para Santander trabajé en Aleph, la aplicación de gestión de préstamos, y en portales de banca online. Para AESA participé en la migración de aplicaciones internas a React."],
+    ],
+    consultingPeriod: "Etapa de consultoría · ene 2018 — jul 2022",
+    consultingClients: [
+      ["santander", "Santander Alemania", "Ingeniero de software · Banca online", "Trabajé en Aleph, la aplicación de gestión de préstamos, y en los portales de banca online. Participé en la migración de módulos a una arquitectura de microfrontends."],
+      ["aesa", "AESA", "Ingeniero de software · Aviación civil", "Para la Agencia Estatal de Seguridad Aérea participé en la migración de aplicaciones internas a React."],
     ],
   },
   en: {
@@ -43,7 +86,11 @@ const content = {
     cvGroup: "Download a CV", cvEs: "Spanish CV", cvEn: "English CV", experience: "End-client experience", jobs: [
       ["inditex", "Inditex", "Senior Frontend Engineer", "Nov 2024 — present", "I lead the microfrontend architecture for Customs Clearance and IOP Documentación. I built the bulk document upload for transport teams, including chunked uploads and file validation."],
       ["mercedes-benz", "Mercedes-Benz", "Software Engineer · Frontend", "Jul 2022 — Nov 2024", "On CaRT, the industrial incident management tool, I took new features from requirements to production. I resolved bottlenecks that slowed down the application for users across countries."],
-      ["santander-aesa", "Santander Germany and AESA", "Software Engineer · Frontend", "Jan 2018 — Jul 2022", "For Santander I worked on Aleph, its loan management app, and on online banking portals. For Spain’s aviation safety agency, AESA, I helped migrate internal applications to React."],
+    ],
+    consultingPeriod: "Consulting period · Jan 2018 — Jul 2022",
+    consultingClients: [
+      ["santander", "Santander Germany", "Software Engineer · Online banking", "I worked on Aleph, the loan management application, and on online banking portals. I helped migrate modules to a microfrontend architecture."],
+      ["aesa", "AESA", "Software Engineer · Civil aviation", "I helped Spain’s aviation safety agency migrate its internal applications to React."],
     ],
   },
 } as const;
@@ -80,8 +127,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </div>
         <nav className="shell client-index" aria-label={t.clientIndex}>
           <span>{t.clientIndex}</span>
-          <a href="#inditex">Inditex <Glyph name="down" size={15}/></a>
-          <a href="#mercedes-benz">Mercedes-Benz <Glyph name="down" size={15}/></a>
+          <a href="#inditex"><ClientMark client="inditex"/><span className="sr-only wordmark-name">Inditex</span><Glyph name="down" size={15}/></a>
+          <a href="#mercedes-benz"><ClientMark client="mercedes-benz"/>Mercedes-Benz <Glyph name="down" size={15}/></a>
         </nav>
       </section>
       <section id="projects" className="project-sheet" aria-labelledby="projects-title"><div className="shell section-block">
@@ -122,9 +169,15 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <a className="button button-outline" href="/CV_ALS_EN.pdf" hrefLang="en" download>{t.cvEn}<Glyph name="download" size={15}/></a>
           </div>
         </div>
-        <div className="experience"><h3>{t.experience}</h3>{t.jobs.map(([id, name, role, date, description]) => <article key={id} id={id}>
-          <span>{date}</span><h4>{name}</h4><p className="client-role">{role}</p><p>{description}</p>
-        </article>)}</div>
+        <div className="experience"><h3>{t.experience}</h3>
+          {t.jobs.map(([id, name, role, date, description]) =>
+            <ClientExperience key={id} client={id} name={name} role={role} period={date} description={description}/>)}
+          <div className="consulting-clients" id="santander-aesa" role="group" aria-labelledby="consulting-period">
+            <span className="experience-date" id="consulting-period">{t.consultingPeriod}</span>
+            {t.consultingClients.map(([id, name, role, description]) =>
+              <ClientExperience key={id} client={id} name={name} role={role} description={description}/>)}
+          </div>
+        </div>
       </div></section>
     </main>
     <Footer locale={locale}/>

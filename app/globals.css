@@ -139,7 +139,7 @@ figure, h1, h2, h3, h4, p { margin: 0; }
 .window-bar { display: flex; align-items: center; gap: 3px; height: 12px; padding-left: 6px; background: #26313c; }
 .window-bar i { width: 3px; height: 3px; background: #a0a8b0; border-radius: 50%; }
 .project-body { padding: 1.28rem 0 .6rem; }
-.project-category, .experience > article > span { font: .65rem/1.6 var(--mono); text-transform: uppercase; letter-spacing: .055em; color: var(--muted); }
+.project-category, .experience-date { font: .65rem/1.6 var(--mono); text-transform: uppercase; letter-spacing: .055em; color: var(--muted); }
 .project-body h3 { display: flex; align-items: center; justify-content: space-between; font-size: clamp(1.65rem,2.4vw,2.3rem); letter-spacing: -.055em; font-weight: 610; margin-block: .25rem .4rem; color: var(--case-ink,var(--fg)); }
 .card-link { color: var(--accent); display: inline-flex; }
 .project-card a:hover .card-link { transform: translate(2px,-2px); }
