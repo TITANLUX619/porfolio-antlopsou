@@ -1,0 +1,167 @@
+/* A single stationary photograph sits behind every route. Content scrolls normally. */
+body { isolation: isolate; background-color: #151912; }
+.site-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: #191a13 url("/art/sevilla-canopy.webp") 56% center / cover no-repeat;
+}
+.site-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(95deg, #070c09c2 0%, #0b0f0b85 34%, #10130e37 73%),
+    linear-gradient(0deg, #080c09a6, transparent 51%);
+}
+html { scroll-padding-top: 5.25rem; }
+.site-header { position: sticky; top: 0; z-index: 6; }
+.header-inner { min-height: 66px; }
+.photo-window {
+  color-scheme: dark;
+  --bg: #141613;
+  --panel: #1a1c19;
+  --fg: #f6f5ee;
+  --muted: #e2e4d8;
+  --accent: #c3f56b;
+  --button: #c3f56b;
+  --ink: #18230c;
+  --line: #ffffff52;
+  color: var(--fg);
+}
+.hero-inner {
+  min-height: clamp(550px, calc(85svh - 85px), 830px);
+  gap: clamp(2rem, 5vw, 6rem);
+  padding-block: clamp(3.3rem, 6vw, 6.5rem);
+}
+.hero h1 { font-size: clamp(4.2rem, 8.1vw, 8.15rem); }
+.hero-intro { max-width: 43ch; }
+.hero-location { color: #f2f4e9; }
+.hero-kicker { color: #e0f9b5; }
+.hero-figure { position: relative; }
+:root[data-theme] .hero .figure-surface { background: transparent; }
+.hero .hero-terminal {
+  mix-blend-mode: normal;
+  mask: url("/art/terminal-mask.svg") center / contain no-repeat;
+}
+.hero .crt-art { filter: drop-shadow(0 18px 15px #05080691); }
+.hero .art-dots { opacity: .22; }
+.hero .cross { color: #e2e6d299; }
+.hero figure figcaption { border-top: 1px solid #f1f3d642; padding: .72rem 0 .1rem; margin: .6rem .4rem 0; }
+.hero .motion-control, .hero .studio-launch { color: #e0ffa9; text-shadow: 0 1px 6px #0c1208; }
+.client-index {
+  display: flex; align-items: center; gap: clamp(1.6rem, 5vw, 5rem);
+  min-height: 80px; border-top: 1px solid #e4e8da59;
+}
+.client-index > span { color: var(--muted); font: .68rem/1.5 var(--mono); text-transform: uppercase; letter-spacing: .11em; }
+.client-index a { display: inline-flex; align-items: center; gap: .7rem; min-height: 44px; font-size: clamp(1.2rem, 2vw, 1.8rem); font-weight: 570; letter-spacing: -.055em; }
+.client-index svg { color: var(--accent); }
+.client-index a:is(:hover,:focus-visible) { color: var(--accent); }
+
+/* Pale exhibition sheet, then a photographic interval for the services. */
+.project-sheet {
+  --fg: #20251e;
+  --muted: #505a4e;
+  --accent: #46601d;
+  --line: #c6c9bd;
+  background: #eeeee6; color: var(--fg);
+}
+.project-sheet .section-block, .career-sheet .section-block { padding-block: clamp(4rem, 7vw, 7.5rem); }
+.project-sheet .section-title, .spread-heading .section-title { font-size: clamp(3.2rem, 5.8vw, 6.25rem); }
+.project-sheet .section-title { margin-bottom: clamp(2rem, 3.4vw, 3.7rem); }
+.project-sheet .project-grid { grid-template-columns: 1.13fr 1fr; column-gap: clamp(2.2rem, 4.2vw, 4.5rem); row-gap: 1.5rem; align-items: start; }
+.project-sheet .project-card:first-child { grid-row: span 2; }
+.project-sheet .project-card:first-child .project-art { aspect-ratio: 1.92; }
+.project-sheet .project-card:not(:first-child) { padding-top: 1.25rem; border-top: 1px solid var(--line); }
+.project-sheet .project-card:not(:first-child) .project-link { display: grid; grid-template-columns: .95fr 1fr; gap: 1.25rem; align-items: start; }
+.project-sheet .project-card:not(:first-child) .project-art { aspect-ratio: 1.35; }
+.project-sheet .project-card:not(:first-child) .project-body { padding: .1rem 0; }
+.project-sheet .project-card:not(:first-child) .project-summary { font-size: .9rem; }
+.project-sheet .project-art { border-radius: 3px; }
+.project-sheet .project-body h3 { font-size: clamp(1.7rem, 2.6vw, 2.75rem); }
+.project-sheet .project-card:first-child .project-body h3 { font-size: clamp(2.3rem, 3.7vw, 4rem); }
+.service-window { background: linear-gradient(90deg, #0a110dda 5%, #11180edb 42%, #15191233 90%); }
+.service-layout {
+  display: grid; grid-template-columns: .86fr 1.14fr; align-items: start;
+  gap: clamp(2.5rem, 8vw, 9rem); padding-block: clamp(4.5rem, 10vw, 10rem);
+}
+.service-layout .section-title { max-width: 10ch; }
+.service-layout .service-grid { display: block; margin: 0; }
+.service-layout .service-grid article {
+  display: grid; align-items: start; grid-template-columns: 1.8rem 1fr; column-gap: .9rem;
+  padding: 1.35rem 0 1.55rem; border-color: #dbe2cc80;
+}
+.service-layout .service-icon { grid-row: span 2; padding-top: .16rem; }
+.service-layout .service-grid h3 { margin: 0 0 .4rem; color: #fff; font-size: clamp(1.4rem, 2.3vw, 2.3rem); }
+.service-layout .service-grid p { color: #f4f5ed; max-width: 50ch; }
+.career-sheet { background: var(--bg); color: var(--fg); }
+.career-sheet .about-grid { grid-template-columns: .94fr 1.06fr; align-items: start; }
+.career-sheet .about-bio { max-width: 38ch; }
+.experience article { padding: 1.55rem 0 2rem; }
+.experience article h4 { font-size: clamp(1.85rem, 3.35vw, 3.5rem); letter-spacing: -.068em; font-weight: 570; line-height: 1.06; margin-block: .48rem; }
+.experience article .client-role { color: var(--fg); font-weight: 640; font-size: .93rem; margin-bottom: .55rem; }
+.cv-downloads { display: flex; flex-wrap: wrap; gap: .55rem; }
+.cv-downloads .button { border-radius: 4px; font-size: .85rem; padding-inline: .95rem; }
+.site-footer.photo-window { background: linear-gradient(90deg,#0d120de6,#151912a6); border-color: #8e998458; }
+.site-footer .contact-row { min-height: min(62svh, 570px); }
+.site-footer .brand-dot { color: var(--accent); }
+.site-footer .footer-base { border-color: #c9d0bc65; }
+.site-footer .copy-status:not(:empty) { background: #151912; }
+.case-main.shell {
+  width: min(calc(100% - clamp(2.5rem, 9vw, 10rem)), 1240px);
+  margin-block: clamp(2.2rem, 6vw, 6rem);
+  padding-inline: clamp(1.75rem, 5.3vw, 6rem);
+  background: color-mix(in srgb, var(--bg) 96%, transparent);
+}
+@supports (animation-timeline: view()) and (animation-range: entry 0% entry 100%) {
+  :root[data-motion="on"] :is(.project-sheet, .career-sheet, .service-window) .section-title {
+    animation: chapter-title auto ease-out both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 95%;
+  }
+  @keyframes chapter-title {
+    from { translate: 0 .3em; clip-path: inset(0 0 18% 0); }
+    to { translate: 0 0; clip-path: inset(0); }
+  }
+}
+@media (min-width: 1001px) {
+  .header-inner { display: grid; grid-template: "nav logo actions" 1fr / 1fr auto 1fr; gap: 1.5rem; }
+  .header-inner > .brand { grid-area: logo; }
+  .header-inner > .desktop-nav { grid-area: nav; margin: 0; justify-self: start; }
+  .header-inner > .header-actions { grid-area: actions; justify-self: end; }
+}
+@media (min-width: 851px) and (min-height: 650px) {
+  .spread-heading { position: sticky; top: 6.25rem; }
+}
+@media (min-width: 751px) and (max-width: 1000px) {
+  .hero h1 { font-size: clamp(4.25rem, 7.8vw, 6rem); }
+  .project-sheet .project-grid { grid-template-columns: 1fr 1fr; }
+  .project-sheet .project-card:not(:first-child) .project-link { grid-template-columns: 1fr; gap: .45rem; }
+  .project-sheet .project-card:not(:first-child) .project-art { aspect-ratio: 2.55; }
+}
+@media (max-width: 750px) {
+  html { scroll-padding-top: 4.8rem; }
+  .site-backdrop { background-image: url("/art/sevilla-canopy-mobile.webp"); background-position: 62% center; }
+  .site-backdrop::after { background: linear-gradient(115deg,#10140cf2 0%,#11160f98 38%,#14180f55 74%), linear-gradient(0deg,#080d08ab,transparent 70%); }
+  .header-inner { min-height: 62px; }
+  .hero-inner { min-height: 0; gap: 1rem; padding-block: 2.75rem 1.25rem; }
+  .hero h1 { font-size: clamp(3.75rem, 12.4vw, 6.3rem); }
+  .hero-intro { max-width: 40ch; }
+  .hero figure figcaption { margin-top: .45rem; }
+  .client-index { flex-wrap: wrap; gap: .1rem 1.45rem; min-height: 0; padding-block: .8rem .6rem; }
+  .client-index > span { width: 100%; font-size: .57rem; }
+  .client-index a { font-size: 1.25rem; min-height: 37px; }
+  .project-sheet .section-block, .career-sheet .section-block, .service-layout { padding-block: 3.6rem; }
+  .project-sheet .project-grid, .service-layout, .career-sheet .about-grid { grid-template-columns: 1fr; }
+  .project-sheet .project-card:first-child { grid-row: auto; }
+  .project-sheet .project-card:first-child .project-art { aspect-ratio: 1.68; }
+  .project-sheet .project-card:not(:first-child) .project-link { grid-template-columns: .77fr 1fr; gap: .95rem; }
+  .project-sheet .project-card:not(:first-child) .project-art { min-height: 115px; aspect-ratio: 1.12; }
+  .project-sheet .project-card:not(:first-child) .project-summary { font-size: .84rem; }
+  .project-sheet .section-title, .spread-heading .section-title { font-size: clamp(2.75rem, 9.5vw, 4rem); }
+  .service-layout { gap: .7rem; }
+  .service-window { background: linear-gradient(90deg,#0c130fce,#131810a8); }
+  .service-layout .service-grid article { padding-block: 1rem 1.2rem; }
+  .site-footer .contact-row { min-height: 0; }
+  .case-main.shell { width: calc(100% - 1.4rem); padding-inline: 1rem; margin-block: 1.4rem; }
+}

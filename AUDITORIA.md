@@ -7,14 +7,14 @@
 | Área | Observación inicial | Cambio comprobado |
 | --- | --- | --- |
 | Presentación profesional | El titular genérico ocupaba la portada y había que recorrer varias secciones para encontrar el contacto. | La portada identifica al profesional, su especialidad y su ubicación. Los accesos a proyectos y contacto aparecen desde la primera pantalla. La sección de servicios concreta qué trabajo se puede contratar. |
-| Credibilidad | El carrusel llegaba a mostrar diez copias de un mismo testimonio. Dos proyectos mostraban claves de traducción y las dos demos existentes devolvían 500. | Tres fichas en ambos idiomas describen lo que se desarrolló y lo ilustran con capturas. ConsultIA enlaza a su demostración pública. Kollab y Meridian se pueden examinar dentro del portfolio. La trayectoria distingue los proyectos realizados a través de Capgemini y Babel. |
+| Credibilidad | El carrusel llegaba a mostrar diez copias de un mismo testimonio. Dos proyectos mostraban claves de traducción y las dos demos existentes devolvían 500. | Tres fichas en ambos idiomas describen lo que se desarrolló y lo ilustran con capturas. ConsultIA enlaza a su demostración pública. Kollab y Meridian se pueden examinar dentro del portfolio. La trayectoria identifica los clientes finales y las funciones que figuran en los CV actualizados. |
 | Navegación y contacto | Había cuatro elementos de enlace sin destino ni texto y botones anidados en enlaces. | Cada tarjeta enlaza a una ficha con URL propia. Se puede pasar al siguiente caso, regresar a la colección, descargar el CV del idioma elegido, abrir el correo o copiar su dirección. |
 | Accesibilidad | La portada tenía 15 encabezados de primer nivel. El lila sobre blanco del titular alcanzaba 1,94:1. El contenido dependía en parte de animaciones de entrada. | Cada página tiene un único H1. Hay salto al contenido, regiones de navegación, foco visible, textos alternativos, dos temas y soporte para movimiento reducido. El menú y la búsqueda en la terminal se pueden usar con teclado. |
 | Rendimiento | El fondo SVG transfería por sí solo unos 2,59 MiB. El inicio cargaba WebGL, notificaba errores geométricos y precargaba dos imágenes inexistentes. | La página se genera estáticamente. El ordenador de portada y las capturas se sirven en WebP, las fuentes se alojan en el proyecto y la interacción principal funciona sin WebGL. |
 | Buscadores y enlaces compartidos | El título y la descripción repetían «antlopsou porfolio». Faltaban URL canónicas, tarjetas sociales, sitemap y robots.txt. | Las ocho páginas tienen títulos y descripciones propios, URL canónicas y alternancias de idioma. Se verificaron el sitemap, robots.txt y las tarjetas sociales. |
 | Dependencias | El análisis del manifiesto original identificó 13 paquetes de producción afectados, uno de gravedad crítica. | Next.js 16.4.6, React 19.3.1 y un lockfile reproducible. npm audit informó de cero vulnerabilidades conocidas en el árbol instalado en la fecha de la revisión. |
 
-## Medición de carga inicial
+## Medición de carga inicial del primer rediseño
 
 | Medida | Web anterior | Rediseño | Reducción |
 | --- | ---: | ---: | ---: |
@@ -30,4 +30,10 @@
 - Se recorrieron las dos portadas y las seis fichas, se probaron el cambio de idioma dentro de un caso, la persistencia del tema, la copia de correo y las descargas de ambos PDF. Se verificaron las respuestas 404 de idioma y proyecto inexistentes.
 - Se ejecutaron ESLint, comprobación de tipos, compilación de producción y npm audit. Doce comprobaciones con axe sobre la portada, la terminal abierta y la ficha de ConsultIA en ambos idiomas y temas dieron cero infracciones automáticas. Las pruebas de contacto comprobaron los destinos y el portapapeles, sin enviar mensajes.
 
-La conversión a solicitudes de contratación requiere datos de visitas y consultas posteriores al lanzamiento.
+Estas cifras corresponden a la revisión `f3a8c0e`. La conversión a solicitudes de contratación requiere datos de visitas y consultas posteriores al lanzamiento.
+
+## Revisión editorial del 12 de noviembre de 2026
+
+La portada y las fichas comparten un fondo fijo con dos encuadres, uno para móvil y otro para escritorio. La dirección visual toma como referencia la alternancia de fotografía a toda anchura y secciones tipográficas de la [web de Inditex](https://www.inditex.com/itxcomweb/es/es/home). La imagen del portfolio se creó para este proyecto a partir de la geometría de las Setas de Sevilla.
+
+La experiencia de Inditex y Mercedes-Benz procede de los CV del 11 de noviembre. Se publicaron los dos PDF originales y se cotejaron sus huellas SHA-256 con los archivos de origen. La interfaz mantiene una respuesta visible al puntero cuando el sistema pide movimiento reducido y permite activar las animaciones para este sitio.

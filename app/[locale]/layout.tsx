@@ -3,12 +3,13 @@ import { notFound } from "next/navigation";
 import { isLocale, locales, siteOrigin } from "@/i18n/routing";
 import { motionStorageKey, reducedMotionQuery } from "@/lib/motion";
 import "../globals.css";
+import "../editorial.css";
 
 const name = "Antonio López Soult";
 const brand = "antlopsou.dev";
 const descriptions = {
-  es: "Portfolio de Antonio López Soult, ingeniero de software en Sevilla. Explora sus proyectos de desarrollo web y aplicaciones y contacta para hablar del tuyo.",
-  en: "Portfolio of Antonio López Soult, a software engineer in Seville, Spain. Explore his web and application projects and get in touch to discuss your own.",
+  es: "Antonio López Soult, ingeniero frontend en Sevilla. Proyectos para Inditex y Mercedes-Benz, aplicaciones propias y automatizaciones con React y TypeScript.",
+  en: "Antonio López Soult, a frontend engineer in Seville. Work for Inditex and Mercedes-Benz, independent applications and automation with React and TypeScript.",
 };
 
 type LocaleParams = { params: Promise<{ locale: string }> };
@@ -83,7 +84,7 @@ export default async function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: restorePreferences }} />
       </head>
-      <body>{children}</body>
+      <body><div className="site-backdrop" aria-hidden="true" />{children}</body>
     </html>
   );
 }

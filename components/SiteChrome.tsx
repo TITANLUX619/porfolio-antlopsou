@@ -37,7 +37,7 @@ export function Header({ locale, slug }: ChromeProps) {
 export function Footer({ locale }: ChromeProps) {
   const es = locale === "es";
   const email = "antlopsou@gmail.com";
-  return <footer id="contact" className="site-footer">
+  return <footer id="contact" className="site-footer photo-window">
     <div className="shell">
       <div className="contact-row">
         <div><span className="eyebrow"><i />{es ? "Contacto" : "Contact"}</span>
