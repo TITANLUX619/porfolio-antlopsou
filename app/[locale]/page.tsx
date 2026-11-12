@@ -2,7 +2,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Header, Footer } from "@/components/SiteChrome";
 import { Glyph, type GlyphName } from "@/components/Glyph";
-import { WorkstationArtwork } from "@/components/WorkstationArtwork";
+import { PortfolioEntrance } from "@/components/PortfolioEntrance";
 import { MotionControl } from "@/components/PortfolioControls";
 import { ProjectCardLink } from "@/components/ProjectCardLink";
 import { StudioTerminal } from "@/components/StudioTerminal";
@@ -54,7 +54,7 @@ const content = {
   es: {
     role: "Antonio López Soult · Ingeniero frontend", city: "Sevilla, España", title: "Código con", accent: "carácter.",
     intro: "En Inditex desarrollo herramientas para aduanas y transporte. En Mercedes-Benz trabajé en el software que usan sus equipos para gestionar incidencias de producción.",
-    workCta: "Ver proyectos", contactCta: "Hablemos", art: "Terminal de aluminio con pantalla plana, teclado integrado y un paisaje de líneas verdes en el monitor.",
+    workCta: "Ver proyectos", contactCta: "Hablemos", replay: "Ver la entrada",
     workLabel: "Desarrollo independiente", work: "Proyectos propios", caseLink: "Ver caso", clientIndex: "Trabajo para clientes",
     servicesLabel: "Servicios", services: "Desarrollo a medida",
     offers: [
@@ -76,7 +76,7 @@ const content = {
   en: {
     role: "Antonio López Soult · Frontend engineer", city: "Seville, Spain", title: "Code with", accent: "character.",
     intro: "I build customs and transport tools for Inditex. At Mercedes-Benz, I worked on the software that teams use to manage incidents on production lines.",
-    workCta: "Explore my work", contactCta: "Let’s talk", art: "Aluminium terminal with a flat display, integrated keyboard and a green wireframe landscape on screen.",
+    workCta: "Explore my work", contactCta: "Let’s talk", replay: "Watch intro",
     workLabel: "Independent development", work: "Selected projects", caseLink: "View case study", clientIndex: "Client work",
     servicesLabel: "Services", services: "Custom development",
     offers: [
@@ -103,7 +103,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const t = content[locale];
   const clients = [...t.jobs, ...t.consultingClients];
 
-  return <>
+  return <PortfolioEntrance locale={locale}>
     <Header locale={locale} />
     <main id="main" tabIndex={-1}>
       <section className="hero photo-window" aria-labelledby="hero-title">
@@ -111,22 +111,18 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           <div className="hero-text">
             <p className="eyebrow hero-kicker"><i />{t.role}</p>
             <h1 id="hero-title"><span>{t.title}</span><br /><em>{t.accent}</em></h1>
+          </div>
+          <div className="hero-details">
             <p className="hero-intro">{t.intro}</p>
             <div className="hero-actions">
               <a className="button button-primary" href="#projects">{t.workCta}<Glyph name="down" size={18}/></a>
               <a className="text-link" href="#contact">{t.contactCta}<Glyph name="upRight" size={16} /></a>
             </div>
-            <p className="hero-location"><Glyph name="pin" size={14} />{t.city}</p>
-          </div>
-          <figure className="hero-figure">
-            <div className="figure-surface">
-              <div className="art-dots" aria-hidden="true" />
-              <span className="cross cross-tl" aria-hidden="true"/><span className="cross cross-tr" aria-hidden="true"/>
-              <WorkstationArtwork alt={t.art} names={projects.map(project => project.name)} />
-              <span className="cross cross-bl" aria-hidden="true"/><span className="cross cross-br" aria-hidden="true"/>
+            <div className="hero-meta">
+              <p className="hero-location"><Glyph name="pin" size={14} />{t.city}</p>
+              <button id="entrance-replay" className="entrance-replay" type="button"><Glyph name="replay" size={14} />{t.replay}</button>
             </div>
-            <figcaption><MotionControl locale={locale}/><StudioTerminal locale={locale} /></figcaption>
-          </figure>
+          </div>
         </div>
         <nav className="shell client-index" aria-label={t.clientIndex}>
           <span>{t.clientIndex}</span>
@@ -188,6 +184,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </div>
       </div></section>
     </main>
-    <Footer locale={locale}/>
-  </>;
+    <Footer locale={locale}><MotionControl locale={locale}/><StudioTerminal locale={locale}/></Footer>
+  </PortfolioEntrance>;
 }

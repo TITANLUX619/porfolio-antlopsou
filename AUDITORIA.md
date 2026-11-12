@@ -36,7 +36,9 @@ Estas cifras corresponden a la revisión `f3a8c0e`. La conversión a solicitudes
 
 La portada y las fichas comparten un fondo fijo con dos encuadres. La dirección visual toma como referencia la alternancia de imagen a toda anchura y secciones tipográficas de la [web de Inditex](https://www.inditex.com/itxcomweb/es/es/home). Usamos la foto original como referencia de cámara en ImageGen para convertir sus curvas en láminas de grafito y vidrio azul.
 
-El nuevo terminal de aluminio parte del [terminal anterior](public/art/terminal.webp). Las versiones para [móvil](public/art/terminal-modern-640.webp) y [escritorio](public/art/terminal-modern.webp) llevan transparencia en el propio WebP. Sobre el cristal se dibuja un paisaje de líneas; al pasar el puntero, tocarlo o enfocar el botón de la terminal con el teclado se ven los nombres de los proyectos.
+El terminal de aluminio parte del [terminal anterior](public/art/terminal.webp). Las versiones para [móvil](public/art/terminal-modern-640.webp) y [escritorio](public/art/terminal-modern.webp) llevan transparencia en el propio WebP. El ordenador aparece sólo en la secuencia de entrada: la portada real se encuadra en el cristal y la cámara avanza hasta que ocupa la ventana. Después quedan el titular, los servicios y los enlaces, sin ordenador dentro de la página.
+
+La entrada automática se limita a la primera visita a la portada en esa pestaña. Se puede saltar o repetir; un enlace directo, la preferencia de movimiento reducido o JavaScript desactivado dan acceso inmediato al contenido.
 
 <details>
 <summary>Prompt de la imagen de terminal elegida (ImageGen)</summary>

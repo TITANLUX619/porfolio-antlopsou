@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { Locale } from "@/i18n/routing";
 import { CopyEmail, LocaleLinks, MobileNav, ThemeControl } from "./PortfolioControls";
 import { Glyph } from "./Glyph";
@@ -34,7 +35,7 @@ export function Header({ locale, slug }: ChromeProps) {
   </header>;
 }
 
-export function Footer({ locale }: ChromeProps) {
+export function Footer({ locale, children }: ChromeProps & { children?: ReactNode }) {
   const es = locale === "es";
   const email = "antlopsou@gmail.com";
   return <footer id="contact" className="site-footer photo-window">
@@ -48,6 +49,7 @@ export function Footer({ locale }: ChromeProps) {
           <div className="email-line"><a href={`mailto:${email}`}>{email}</a><CopyEmail email={email} locale={locale} /></div>
         </div>
       </div>
+      {children && <div className="footer-tools">{children}</div>}
       <div className="footer-base"><Brand locale={locale} /><span>© {new Date().getUTCFullYear()} Antonio López Soult</span>
         <div><a href="https://github.com/TITANLUX619">GitHub <Glyph name="upRight" size={13} /></a>
           <a href="https://www.linkedin.com/in/antlopsou/">LinkedIn <Glyph name="upRight" size={13} /></a></div>

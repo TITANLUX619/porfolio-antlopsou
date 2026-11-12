@@ -83,6 +83,7 @@ export default async function CasePage({ params }: PageProps) {
 
   return (
     <>
+      <div className="site-backdrop" aria-hidden="true" />
       <Header locale={locale} slug={project.slug} />
       <main className="case-main shell" id="main" tabIndex={-1}>
         <a className="case-back" href={`/${locale}#projects`}>

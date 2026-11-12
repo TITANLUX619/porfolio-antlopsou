@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale, locales, siteOrigin } from "@/i18n/routing";
-import { motionStorageKey, reducedMotionQuery } from "@/lib/motion";
+import { entranceSessionKey, motionStorageKey, reducedMotionQuery } from "@/lib/motion";
 import "../globals.css";
 import "../editorial.css";
 
@@ -62,9 +62,22 @@ const restorePreferences = `(() => {
     let choice;
     try { choice = localStorage.getItem("${motionStorageKey}"); } catch {}
     root.dataset.motion = choice === "on" || choice === "off" ? choice : systemMotion.matches ? "off" : "on";
+    if (root.dataset.motion !== "on") delete root.dataset.entrance;
   }
   try { if (localStorage.getItem("theme") === "light") root.dataset.theme = "light"; } catch {}
   updateMotion();
+  if (root.dataset.motion === "on" && !location.hash && ${JSON.stringify(locales.flatMap(locale => [`/${locale}`, `/${locale}/`]))}.includes(location.pathname) &&
+      typeof Element.prototype.animate === "function" && CSS.supports("clip-path", "polygon(0 0, 100% 0, 0 100%)")) {
+    try {
+      const historyVisit = performance.getEntriesByType("navigation")[0]?.type === "back_forward";
+      const internal = document.referrer && new URL(document.referrer).origin === location.origin;
+      if (!historyVisit && !internal && !sessionStorage.getItem("${entranceSessionKey}")) {
+        root.dataset.entrance = "pending";
+        window.addEventListener("hashchange", () => { delete root.dataset.entrance; }, { once: true });
+        setTimeout(() => { if (root.dataset.entrance === "pending") delete root.dataset.entrance; }, 2800);
+      }
+    } catch {}
+  }
   systemMotion.addEventListener("change", updateMotion);
   window.addEventListener("pageshow", updateMotion);
   window.addEventListener("storage", event => {
@@ -84,7 +97,7 @@ export default async function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: restorePreferences }} />
       </head>
-      <body><div className="site-backdrop" aria-hidden="true" />{children}</body>
+      <body>{children}</body>
     </html>
   );
 }
