@@ -48,7 +48,7 @@ html { scroll-padding-top: 5.25rem; }
 .hero-location { color: #f2f4e9; min-height: 44px; margin: .65rem 0 0; }
 .hero-kicker { color: #e0f9b5; }
 .footer-tools { display: flex; align-items: center; gap: 1.4rem; padding-block: .55rem; }
-.footer-tools :is(.motion-control, .studio-launch) { margin: 0; padding-inline: 0; }
+.footer-tools .studio-launch { margin: 0; padding-inline: 0; }
 .client-index {
   display: grid; grid-template-columns: auto 1fr; align-items: center; gap: clamp(1.5rem, 4vw, 4rem);
   min-height: 80px; border-top: 1px solid #e4e8da59;

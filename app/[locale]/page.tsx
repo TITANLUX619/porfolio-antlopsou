@@ -4,7 +4,6 @@ import { Header, Footer } from "@/components/SiteChrome";
 import { Glyph, type GlyphName } from "@/components/Glyph";
 import { PortfolioEntrance } from "@/components/PortfolioEntrance";
 import { SectionReveals } from "@/components/SectionReveals";
-import { MotionControl } from "@/components/PortfolioControls";
 import { ProjectCardLink } from "@/components/ProjectCardLink";
 import { StudioTerminal } from "@/components/StudioTerminal";
 import { projects } from "@/data/projects";
@@ -199,6 +198,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </div></section>
     </main>
     <SectionReveals />
-    <Footer locale={locale}><MotionControl locale={locale}/><StudioTerminal locale={locale} cases={caseIndex}/></Footer>
+    <Footer locale={locale}><StudioTerminal locale={locale} cases={caseIndex}/></Footer>
   </PortfolioEntrance>;
 }

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale, locales, siteOrigin } from "@/i18n/routing";
-import { motionStorageKey, reducedMotionQuery, visitMotionStorageKey } from "@/lib/motion";
 import "../globals.css";
 import "../editorial.css";
 
@@ -55,42 +54,38 @@ export async function generateMetadata({ params }: LocaleParams): Promise<Metada
   };
 }
 
-const restorePreferences = `(() => {
+const initializePage = `(() => {
   const root = document.documentElement;
-  const systemMotion = matchMedia("${reducedMotionQuery}");
-  function updateMotion() {
-    let choice;
-    try { choice = localStorage.getItem("${motionStorageKey}"); } catch {}
-    root.dataset.motion = root.dataset.visitMotion || (choice === "on" || choice === "off" ? choice : systemMotion.matches ? "off" : "on");
-  }
-  try { if (localStorage.getItem("theme") === "light") root.dataset.theme = "light"; } catch {}
-  if (!location.hash && ${JSON.stringify(locales.flatMap(locale => [`/${locale}`, `/${locale}/`]))}.includes(location.pathname)) {
+  root.dataset.motion = "on";
+  const navigationType = performance.getEntriesByType?.("navigation")[0]?.type
+    ?? (["navigate", "reload", "back_forward"][performance.navigation?.type] || "navigate");
+  const fromHistory = navigationType === "back_forward";
+  const internalLink = navigationType === "navigate" && document.referrer.startsWith(location.origin + "/");
+
+  // Pass a manual theme to the next page in this tab only when leaving the current one.
+  const themeKey = "antlopsou-next-page-theme";
+  function resumeVisit(internal) {
     try {
-      const navigationType = performance.getEntriesByType?.("navigation")[0]?.type
-        ?? (["navigate", "reload", "back_forward"][performance.navigation?.type] || "navigate");
-      const internal = document.referrer && new URL(document.referrer).origin === location.origin;
-      if (navigationType === "reload" || (navigationType === "navigate" && !internal)) {
-        root.dataset.entrance = "standby";
-        const clearEntrance = () => { delete root.dataset.entrance; };
-        window.addEventListener("hashchange", clearEntrance, { once: true });
-        window.addEventListener("pagehide", clearEntrance, { once: true });
-      }
-    } catch {}
+      const theme = sessionStorage.getItem(themeKey);
+      sessionStorage.removeItem(themeKey);
+      if (!internal || (theme !== "dark" && theme !== "light")) return false;
+      root.dataset.theme = theme;
+      return true;
+    } catch { return internal; }
   }
-  try {
-    if (root.dataset.entrance) sessionStorage.removeItem("${visitMotionStorageKey}");
-    else if (sessionStorage.getItem("${visitMotionStorageKey}") === "on") root.dataset.visitMotion = "on";
-  } catch {}
-  updateMotion();
-  systemMotion.addEventListener("change", updateMotion);
-  window.addEventListener("pageshow", updateMotion);
-  window.addEventListener("storage", event => {
-    if (event.key === "${motionStorageKey}" || event.key === null) {
-      delete root.dataset.visitMotion;
-      try { sessionStorage.removeItem("${visitMotionStorageKey}"); } catch {}
-      updateMotion();
-    }
+  // Opening an internal link in a new tab also sends a referrer, but no theme was passed.
+  const resumed = resumeVisit(fromHistory || internalLink);
+  window.addEventListener("pagehide", () => {
+    try { sessionStorage.setItem(themeKey, root.dataset.theme); } catch {}
+    delete root.dataset.entrance;
   });
+  window.addEventListener("pageshow", event => {
+    if (event.persisted) resumeVisit(true);
+  });
+  if (!fromHistory && !resumed && !location.hash && ${JSON.stringify(locales.flatMap(locale => [`/${locale}`, `/${locale}/`]))}.includes(location.pathname)) {
+    root.dataset.entrance = "standby";
+    window.addEventListener("hashchange", () => { delete root.dataset.entrance; }, { once: true });
+  }
 })();`;
 
 export default async function RootLayout({
@@ -103,7 +98,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} data-theme="dark" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: restorePreferences }} />
+        <script dangerouslySetInnerHTML={{ __html: initializePage }} />
       </head>
       <body>
         <div className="site-backdrop" aria-hidden="true" />

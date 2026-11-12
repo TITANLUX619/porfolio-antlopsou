@@ -92,11 +92,6 @@ figure, h1, h2, h3, h4, p { margin: 0; }
 .text-link:hover svg { transform: translate(2px,-2px); }
 .hero-location { display: flex; width: fit-content; margin-top: 1.45rem; gap: .45rem; font: .68rem var(--mono); color: var(--muted); }
 .hero-location svg { color: var(--accent); }
-.motion-control { display: none; background: transparent; border: 0; padding: .45rem .4rem .45rem 0; min-height: 44px; margin-block: -.55rem; font: .7rem/1.35 var(--mono); color: var(--accent); }
-.motion-control span { display: inline-flex; align-items: center; gap: .45rem; }
-.motion-control:hover { text-decoration: underline; text-underline-offset: .3em; }
-:root[data-motion] .motion-control { display: inline-flex; align-items: center; }
-:root[data-motion="on"] .motion-enable, :root:not([data-motion="on"]) .motion-disable { display: none; }
 .stack-strip { border-block: 1px solid var(--line); background: var(--panel); }
 .stack-inner { display: flex; align-items: center; gap: clamp(2rem, 4vw, 5rem); min-height: 75px; }
 .stack-label { white-space: nowrap; color: var(--muted); font: .66rem var(--mono); text-transform: uppercase; letter-spacing: .09em; }

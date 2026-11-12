@@ -2,34 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { Locale } from "@/i18n/routing";
-import { motionStorageKey, reducedMotionQuery, visitMotionStorageKey } from "@/lib/motion";
 import { Glyph } from "./Glyph";
-
-export function MotionControl({ locale }: { locale: Locale }) {
-  const es = locale === "es";
-  function toggle() {
-    const root = document.documentElement;
-    const next = root.dataset.motion === "on" ? "off" : "on";
-    delete root.dataset.visitMotion;
-    try { sessionStorage.removeItem(visitMotionStorageKey); } catch { /* Storage can be unavailable. */ }
-    root.dataset.motion = next;
-    try {
-      const system = matchMedia(reducedMotionQuery).matches ? "off" : "on";
-      if (next === system) localStorage.removeItem(motionStorageKey);
-      else localStorage.setItem(motionStorageKey, next);
-    } catch { /* The control works for this page even if storage is disabled. */ }
-  }
-  return <button type="button" className="motion-control" onClick={toggle}>
-    <span className="motion-enable"><Glyph name="play" size={14}/>{es ? "Activar animaciones" : "Enable animations"}</span>
-    <span className="motion-disable"><Glyph name="pause" size={14}/>{es ? "Pausar animaciones" : "Pause animations"}</span>
-  </button>;
-}
 
 export function ThemeControl({ locale }: { locale: Locale }) {
   function toggle() {
-    const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
-    document.documentElement.dataset.theme = next;
-    try { localStorage.setItem("theme", next); } catch { /* The switch also works without storage. */ }
+    const root = document.documentElement;
+    root.dataset.theme = root.dataset.theme === "light" ? "dark" : "light";
   }
   return <button type="button" className="icon-control theme-control" onClick={toggle}>
     <span className="theme-sun"><Glyph name="sun" size={17} /><span className="sr-only">{locale === "es" ? "Activar tema claro" : "Use light theme"}</span></span>
