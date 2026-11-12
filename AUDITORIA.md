@@ -34,7 +34,7 @@ Estas cifras corresponden a la revisión `f3a8c0e`. La conversión a solicitudes
 
 ## Revisión editorial del 12 de noviembre de 2026
 
-La portada y las fichas comparten un fondo fijo con dos encuadres. La dirección visual toma como referencia la alternancia de imagen a toda anchura y secciones tipográficas de la [web de Inditex](https://www.inditex.com/itxcomweb/es/es/home). Usamos la foto original como referencia de cámara en ImageGen para convertir sus curvas en láminas de grafito y vidrio azul. La carcasa cálida del CRT recibe más luz y proyecta una sombra independiente sobre el fondo frío.
+La portada y las fichas comparten un fondo fijo con dos encuadres. La dirección visual toma como referencia la alternancia de imagen a toda anchura y secciones tipográficas de la [web de Inditex](https://www.inditex.com/itxcomweb/es/es/home). Usamos la foto original como referencia de cámara en ImageGen para convertir sus curvas en láminas de grafito y vidrio azul. La portada recupera el [escritorio isométrico del portfolio original](public/assets/op1.jpg). Su monitor muestra los proyectos al pasar el puntero, tocar la ilustración o enfocar el botón de la terminal con el teclado.
 
 <details>
 <summary>Referencia, prompt y fondos publicados</summary>

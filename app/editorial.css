@@ -39,17 +39,8 @@ html { scroll-padding-top: 5.25rem; }
 .hero-location { color: #f2f4e9; }
 .hero-kicker { color: #e0f9b5; }
 .hero-figure { position: relative; }
-:root[data-theme] .hero .figure-surface {
-  background: radial-gradient(ellipse 55% 55% at 53% 53%, #050c19db 32%, #050c19b0 58%, #060b1745 80%, transparent 100%);
-}
-.hero .hero-terminal {
-  mix-blend-mode: normal;
-  mask: url("/art/terminal-mask.svg") center / contain no-repeat;
-}
-.hero .crt-art {
-  filter: brightness(1.42) contrast(.93) saturate(.74)
-    drop-shadow(1px -1px 1.5px #dae6ffa6) drop-shadow(0 6px 4px #01040bcc)
-    drop-shadow(0 18px 18px #010510db);
+.hero .figure-surface {
+  background: radial-gradient(ellipse at 53% 59%, #060b19bd 15%, #060b1978 48%, transparent 74%);
 }
 .hero .art-dots { opacity: .22; }
 .hero .cross { color: #e2e6d299; }

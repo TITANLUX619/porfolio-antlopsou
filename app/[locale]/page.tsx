@@ -2,7 +2,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Header, Footer } from "@/components/SiteChrome";
 import { Glyph, type GlyphName } from "@/components/Glyph";
-import { CrtArtwork } from "@/components/CrtArtwork";
+import { WorkstationArtwork } from "@/components/WorkstationArtwork";
 import { MotionControl } from "@/components/PortfolioControls";
 import { ProjectCardLink } from "@/components/ProjectCardLink";
 import { StudioTerminal } from "@/components/StudioTerminal";
@@ -52,7 +52,7 @@ const content = {
   es: {
     role: "Antonio López Soult · Ingeniero frontend", city: "Sevilla, España", title: "Código con", accent: "carácter.",
     intro: "En Inditex desarrollo herramientas para aduanas y transporte. En Mercedes-Benz trabajé en el software que usan sus equipos para gestionar incidencias de producción.",
-    workCta: "Ver proyectos", contactCta: "Hablemos", art: "Terminal de sobremesa retro con una montaña trazada en verde fósforo sobre la pantalla.",
+    workCta: "Ver proyectos", contactCta: "Hablemos", art: "Escritorio de desarrollo en perspectiva isométrica con monitor panorámico, teclado y silla.",
     workLabel: "Desarrollo independiente", work: "Proyectos propios", caseLink: "Ver caso", clientIndex: "Trabajo para clientes",
     servicesLabel: "Servicios", services: "Desarrollo a medida",
     offers: [
@@ -74,7 +74,7 @@ const content = {
   en: {
     role: "Antonio López Soult · Frontend engineer", city: "Seville, Spain", title: "Code with", accent: "character.",
     intro: "I build customs and transport tools for Inditex. At Mercedes-Benz, I worked on the software that teams use to manage incidents on production lines.",
-    workCta: "Explore my work", contactCta: "Let’s talk", art: "Vintage desktop terminal with a green phosphor wireframe mountain on its screen.",
+    workCta: "Explore my work", contactCta: "Let’s talk", art: "Isometric view of a developer’s desk with an ultrawide monitor, keyboard and chair.",
     workLabel: "Independent development", work: "Selected projects", caseLink: "View case study", clientIndex: "Client work",
     servicesLabel: "Services", services: "Custom development",
     offers: [
@@ -119,7 +119,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <div className="figure-surface">
               <div className="art-dots" aria-hidden="true" />
               <span className="cross cross-tl" aria-hidden="true"/><span className="cross cross-tr" aria-hidden="true"/>
-              <CrtArtwork alt={t.art} names={projects.map(project => project.name)} />
+              <WorkstationArtwork alt={t.art} names={projects.map(project => project.name)} />
               <span className="cross cross-bl" aria-hidden="true"/><span className="cross cross-br" aria-hidden="true"/>
             </div>
             <figcaption><MotionControl locale={locale}/><StudioTerminal locale={locale} /></figcaption>
