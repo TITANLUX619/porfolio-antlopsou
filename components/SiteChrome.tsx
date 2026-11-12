@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { contactEmail } from "@/data/contact";
 import type { Locale } from "@/i18n/routing";
 import { CopyEmail, LocaleLinks, MobileNav, ThemeControl } from "./PortfolioControls";
 import { Glyph } from "./Glyph";
@@ -15,8 +16,8 @@ export function Header({ locale, slug }: ChromeProps) {
   const es = locale === "es";
   const base = slug ? `/${locale}` : "";
   const links = [
-    { href: base + "#projects", label: es ? "Proyectos" : "Work" },
     { href: base + "#services", label: es ? "Servicios" : "Services" },
+    { href: base + "#projects", label: es ? "Proyectos" : "Projects" },
     { href: base + "#about", label: es ? "Sobre mí" : "About" },
   ];
   const contact = { href: "#contact", label: es ? "Hablemos" : "Let’s talk" };
@@ -37,16 +38,15 @@ export function Header({ locale, slug }: ChromeProps) {
 
 export function Footer({ locale, children }: ChromeProps & { children?: ReactNode }) {
   const es = locale === "es";
-  const email = "antlopsou@gmail.com";
   return <footer id="contact" className="site-footer photo-window">
     <div className="shell">
       <div className="contact-row">
         <div><span className="eyebrow"><i />{es ? "Contacto" : "Contact"}</span>
-          <h2>{es ? "¿Qué tienes" : "What do you"}<br /><em>{es ? "en mente?" : "have in mind?"}</em></h2></div>
+          <h2>{es ? "Hablemos de" : "Let’s discuss"}<br /><em>{es ? "tu proyecto." : "your project."}</em></h2></div>
         <div className="contact-intro">
-          <p>{es ? "Cuéntame qué quieres construir, para quién y en qué punto estás. Podemos empezar por ahí." : "Tell me what you’re building, who it’s for and how far you’ve got. We can start there."}</p>
-          <a className="button button-primary" href={`mailto:${email}?subject=${encodeURIComponent(es ? "Hablemos de un proyecto" : "Let’s talk about a project")}`}>{es ? "Escríbeme" : "Email me"} <Glyph name="upRight" size={18} /></a>
-          <div className="email-line"><a href={`mailto:${email}`}>{email}</a><CopyEmail email={email} locale={locale} /></div>
+          <p>{es ? "Cuéntame qué proceso necesitas mejorar, quién utilizará la solución y qué plazos manejas. Con ese contexto podemos definir el alcance de una primera entrega." : "Tell me which process you need to improve, who will use the software and what timeline you have in mind. From there we can define what a first release should cover."}</p>
+          <a className="button button-primary" href={`mailto:${contactEmail}?subject=${encodeURIComponent(es ? "Consulta sobre un proyecto" : "Project enquiry")}`}>{es ? "Escríbeme" : "Email me"} <Glyph name="upRight" size={18} /></a>
+          <div className="email-line"><a href={`mailto:${contactEmail}`}>{contactEmail}</a><CopyEmail email={contactEmail} locale={locale} /></div>
         </div>
       </div>
       {children && <div className="footer-tools">{children}</div>}

@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale, locales, siteOrigin } from "@/i18n/routing";
-import { entranceSessionKey, motionStorageKey, reducedMotionQuery } from "@/lib/motion";
+import { motionStorageKey, reducedMotionQuery } from "@/lib/motion";
 import "../globals.css";
 import "../editorial.css";
 
 const name = "Antonio López Soult";
 const brand = "antlopsou.dev";
 const descriptions = {
-  es: "Antonio López Soult, ingeniero frontend en Sevilla. Proyectos para Inditex y Mercedes-Benz, aplicaciones propias y automatizaciones con React y TypeScript.",
-  en: "Antonio López Soult, a frontend engineer in Seville. Work for Inditex and Mercedes-Benz, independent applications and automation with React and TypeScript.",
+  es: "Antonio López Soult, ingeniero de software en Sevilla. Aplicaciones web y móviles, automatización y arquitectura frontend. Proyectos: ConsultIA y Trento Consulting.",
+  en: "Antonio López Soult, a software engineer in Seville. Web and mobile development, automation and frontend architecture. Projects: ConsultIA and Trento Consulting.",
 };
 
 type LocaleParams = { params: Promise<{ locale: string }> };
@@ -62,19 +62,19 @@ const restorePreferences = `(() => {
     let choice;
     try { choice = localStorage.getItem("${motionStorageKey}"); } catch {}
     root.dataset.motion = choice === "on" || choice === "off" ? choice : systemMotion.matches ? "off" : "on";
-    if (root.dataset.motion !== "on") delete root.dataset.entrance;
   }
   try { if (localStorage.getItem("theme") === "light") root.dataset.theme = "light"; } catch {}
   updateMotion();
-  if (root.dataset.motion === "on" && !location.hash && ${JSON.stringify(locales.flatMap(locale => [`/${locale}`, `/${locale}/`]))}.includes(location.pathname) &&
-      typeof Element.prototype.animate === "function" && CSS.supports("clip-path", "polygon(0 0, 100% 0, 0 100%)")) {
+  if (!location.hash && ${JSON.stringify(locales.flatMap(locale => [`/${locale}`, `/${locale}/`]))}.includes(location.pathname)) {
     try {
-      const historyVisit = performance.getEntriesByType("navigation")[0]?.type === "back_forward";
+      const navigationType = performance.getEntriesByType?.("navigation")[0]?.type
+        ?? (["navigate", "reload", "back_forward"][performance.navigation?.type] || "navigate");
       const internal = document.referrer && new URL(document.referrer).origin === location.origin;
-      if (!historyVisit && !internal && !sessionStorage.getItem("${entranceSessionKey}")) {
-        root.dataset.entrance = "pending";
-        window.addEventListener("hashchange", () => { delete root.dataset.entrance; }, { once: true });
-        setTimeout(() => { if (root.dataset.entrance === "pending") delete root.dataset.entrance; }, 2800);
+      if (navigationType === "reload" || (navigationType === "navigate" && !internal)) {
+        root.dataset.entrance = "standby";
+        const clearEntrance = () => { delete root.dataset.entrance; };
+        window.addEventListener("hashchange", clearEntrance, { once: true });
+        window.addEventListener("pagehide", clearEntrance, { once: true });
       }
     } catch {}
   }
@@ -97,7 +97,10 @@ export default async function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: restorePreferences }} />
       </head>
-      <body>{children}</body>
+      <body>
+        <div className="site-backdrop" aria-hidden="true" />
+        {children}
+      </body>
     </html>
   );
 }

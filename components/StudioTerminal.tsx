@@ -2,7 +2,6 @@
 
 import { useId, useRef, useState } from "react";
 import type { Locale } from "@/i18n/routing";
-import { projects } from "@/data/projects";
 import { Glyph } from "./Glyph";
 import "@/app/terminal.css";
 
@@ -10,7 +9,9 @@ function searchable(value: string) {
   return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 }
 
-export function StudioTerminal({ locale }: { locale: Locale }) {
+type CaseEntry = { name: string; slug: string; terms: string };
+
+export function StudioTerminal({ locale, cases }: { locale: Locale; cases: CaseEntry[] }) {
   const es = locale === "es";
   const titleId = useId();
   const searchId = useId();
@@ -20,11 +21,11 @@ export function StudioTerminal({ locale }: { locale: Locale }) {
   const firstResult = useRef<HTMLAnchorElement>(null);
   const [query, setQuery] = useState("");
   const actions = [
-    ...projects.map((project) => ({
+    ...cases.map((project) => ({
       label: project.name,
-      kind: es ? "Proyecto" : "Project",
+      kind: es ? "Caso de estudio" : "Case study",
       href: `/${locale}/work/${project.slug}`,
-      terms: `${project[locale].category} ${project.stack.join(" ")}`,
+      terms: project.terms,
       download: false,
     })),
     {

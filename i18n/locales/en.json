@@ -78,16 +78,6 @@
       "description": ""
     }
   },
-  "projects": {
-    "1": {
-      "title": "Kollab",
-      "des": "Create collaborative text documents in real time with Kollab. Edit, share, and collaborate with colleagues in a team-oriented workspace."
-    },
-    "2": {
-      "title": "Meridian",
-
-      "des": "Keep all your bank accounts in one place with Meridian. Manage your finances efficiently and securely."    }
-  },
   "testimonials": {
     "1":{
       "quote": "Collaborating with Antonio was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Antonio's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Antonio is the ideal partner.",

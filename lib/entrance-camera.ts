@@ -1,39 +1,51 @@
-// Inside edge of the glass in the 1448 × 1086 terminal artwork, clockwise.
-const glass = [[253, 149], [1068, 154], [1049, 640], [211, 635]];
+// Inside the bezel in the source photograph. Both WebPs use this exact crop.
+const photo = { width: 1536, height: 1024 };
+const glass = { left: 165, top: 67, right: 1370, bottom: 696 };
+const focusX = (glass.left + glass.right) / (2 * photo.width);
+const focusY = (glass.top + glass.bottom) / (2 * photo.height);
 
-export function entranceCamera(device: DOMRect, width: number, height: number) {
-  const corners = glass.map(([x, y]) => ({
-    x: device.left + x * device.width / 1448,
-    y: device.top + y * device.height / 1086,
-  }));
-  // The rectangle inside all four sloping edges must cover the final viewport.
-  const left = Math.max(corners[0].x, corners[3].x), right = Math.min(corners[1].x, corners[2].x);
-  const top = Math.max(corners[0].y, corners[1].y), bottom = Math.min(corners[2].y, corners[3].y);
-  const cx = (left + right) / 2, cy = (top + bottom) / 2;
-  const zoom = Math.max(width / (right - left), height / (bottom - top)) * 1.025;
+// The two opaque bands keep the frame and keyboard, leaving the glass open.
+function outsideGlass(direction: "right" | "bottom", start: number, end: number, dimension: number) {
+  const near = `${100 * start / dimension}%`;
+  const far = `${100 * end / dimension}%`;
+  return `linear-gradient(to ${direction}, black ${near}, transparent ${near} ${far}, black ${far})`;
+}
+
+export const studioMonitor = {
+  ...photo,
+  frameMask: [
+    outsideGlass("right", glass.left, glass.right, photo.width),
+    outsideGlass("bottom", glass.top, glass.bottom, photo.height),
+  ].join(", "),
+  slotStyle: {
+    aspectRatio: `${photo.width} / ${photo.height}`,
+    transform: `translate(${-100 * focusX}%, ${-100 * focusY}%)`,
+  },
+  transformOrigin: `${100 * focusX}% ${100 * focusY}%`,
+};
+
+export function entranceCamera(device: DOMRect, width: number, height: number, previewDepth: number) {
+  const cx = device.left + device.width * focusX, cy = device.top + device.height * focusY;
+  const halfW = device.width * (glass.right - glass.left) / (2 * photo.width);
+  const halfH = device.height * (glass.bottom - glass.top) / (2 * photo.height);
+  // A small bleed clears the last antialiased bezel pixel on fractional viewports.
+  const zoom = Math.max(cx / halfW, (width - cx) / halfW, cy / halfH, (height - cy) / halfH) * 1.006;
+  // The small monitor is wide even on a phone. Frame the first section
+  // together with the hero, then ease into the visitor's actual viewport.
+  const previewWidth = Math.max(width, previewDepth * halfW / halfH);
   const hardware: Keyframe[] = [], aperture: Keyframe[] = [], page: Keyframe[] = [];
 
   // Sample the same camera path once for all three native browser animations.
   for (let i = 0; i <= 24; i++) {
     const t = i / 24, scale = zoom ** t;
-    const moveX = (width / 2 - cx) * t, moveY = (height / 2 - cy) * t;
-    const x = (value: number) => cx + (value - cx) * scale + moveX;
-    const y = (value: number) => cy + (value - cy) * scale + moveY;
-    const points = corners.map(p => [x(p.x), y(p.y)]);
-    hardware.push({ offset: t, transform: `translate(${x(device.left) - device.left}px, ${y(device.top) - device.top}px) scale(${scale})` });
-    aperture.push({ offset: t, clipPath: `polygon(${points.map(([px, py]) => `${px}px ${py}px`).join(",")})` });
+    hardware.push({ offset: t, transform: `scale(${scale})` });
+    const l = Math.max(0, cx - halfW * scale), r = Math.min(width, cx + halfW * scale);
+    const u = Math.max(0, cy - halfH * scale), b = Math.min(height, cy + halfH * scale);
+    aperture.push({ offset: t, clipPath: `inset(${u}px ${width - r}px ${height - b}px ${l}px)` });
 
-    // Fit the live page to the visible part of the glass without stretching
-    // text. On a phone the bottom of the page is revealed as the camera enters.
-    const xs = points.map(p => p[0]), ys = points.map(p => p[1]);
-    const l = Math.max(0, Math.min(...xs)), r = Math.min(width, Math.max(...xs));
-    const u = Math.max(0, Math.min(...ys)), b = Math.min(height, Math.max(...ys));
-    const fit = Math.max((r - l) / width, (b - u) / height);
-    // Frame the headline inside the wide monitor on a portrait phone. As the
-    // glass opens vertically, the header returns to its normal top edge.
-    const crop = Math.max(0, height * fit - (b - u));
-    const headlineOffset = width < height ? Math.min(crop, 88 * fit) * (1 - t) : 0;
-    page.push({ offset: t, transform: `translate(${(l + r - fit * width) / 2}px, ${u - headlineOffset}px) scale(${fit})` });
+    const blend = t * t * (3 - 2 * t);
+    const pageWidth = previewWidth + (width - previewWidth) * blend;
+    page.push({ offset: t, width: `${pageWidth}px`, transform: `translate(${l}px, ${u}px) scale(${(r - l) / pageWidth})` });
   }
   return { hardware, aperture, page };
 }
