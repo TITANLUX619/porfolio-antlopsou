@@ -47,12 +47,13 @@ html { scroll-padding-top: 5.25rem; }
 .hero figure figcaption { border-top: 1px solid #f1f3d642; padding: .72rem 0 .1rem; margin: .6rem .4rem 0; }
 .hero .motion-control, .hero .studio-launch { color: #e0ffa9; text-shadow: 0 1px 6px #0c1208; }
 .client-index {
-  display: flex; align-items: center; gap: clamp(1.6rem, 5vw, 5rem);
+  display: grid; grid-template-columns: auto 1fr; align-items: center; gap: clamp(1.5rem, 4vw, 4rem);
   min-height: 80px; border-top: 1px solid #e4e8da59;
 }
 .client-index > span { color: var(--muted); font: .68rem/1.5 var(--mono); text-transform: uppercase; letter-spacing: .11em; }
-.client-index a { display: inline-flex; align-items: center; gap: .7rem; min-height: 44px; font-size: clamp(1.2rem, 2vw, 1.8rem); font-weight: 570; letter-spacing: -.055em; }
-.client-index svg { color: var(--accent); }
+.client-index ul { display: flex; align-items: center; justify-content: space-between; gap: 1rem; list-style: none; margin: 0; padding: 0; }
+.client-index a { display: inline-flex; align-items: center; gap: .36em; min-height: 44px; font-size: clamp(1.1rem, 1.85vw, 1.8rem); line-height: 1.15; font-weight: 570; letter-spacing: -.055em; }
+.client-index svg { flex: none; width: .65em; height: .65em; color: var(--accent); }
 .client-index a:is(:hover,:focus-visible) { color: var(--accent); }
 .client-mark {
   display: inline-block; flex: none; width: .92em; height: .92em; background-color: currentColor;
@@ -62,13 +63,9 @@ html { scroll-padding-top: 5.25rem; }
 .client-mark--santander { mask-size: 178%; }
 .client-mark--aesa { width: 1.05em; }
 
-/* Pale exhibition sheet, then a photographic interval for the services. */
+/* The project and career panels use the active theme over the fixed photograph. */
 .project-sheet {
-  --fg: #20251e;
-  --muted: #505a4e;
-  --accent: #46601d;
-  --line: #c6c9bd;
-  background-color: rgb(238 238 230 / 90%); color: var(--fg);
+  background-color: color-mix(in srgb, var(--panel) 90%, transparent); color: var(--fg);
 }
 .project-sheet .section-block, .career-sheet .section-block { padding-block: clamp(4rem, 7vw, 7.5rem); }
 .project-sheet .section-title, .spread-heading .section-title { font-size: clamp(3.2rem, 5.8vw, 6.25rem); }
@@ -103,9 +100,9 @@ html { scroll-padding-top: 5.25rem; }
 .career-sheet .about-bio { max-width: 38ch; }
 .experience article { padding: 1.55rem 0 2rem; }
 .client-heading { position: relative; display: flex; align-items: center; gap: .36em; }
-.client-heading .client-mark--mercedes-benz { color: #c5cac7; }
-.client-heading .client-mark--santander { color: #e88073; }
-.client-heading .client-mark--aesa { color: #80b5cf; }
+.client-mark--mercedes-benz { color: #c5cac7; }
+.client-mark--santander { color: #e88073; }
+.client-mark--aesa { color: #80b5cf; }
 :root[data-theme="light"] .client-heading .client-mark--mercedes-benz { color: #545e59; }
 :root[data-theme="light"] .client-heading .client-mark--santander { color: #ad493f; }
 :root[data-theme="light"] .client-heading .client-mark--aesa { color: #356c88; }
@@ -156,6 +153,9 @@ html { scroll-padding-top: 5.25rem; }
   .project-sheet .project-card:not(:first-child) .project-link { grid-template-columns: 1fr; gap: .45rem; }
   .project-sheet .project-card:not(:first-child) .project-art { aspect-ratio: 2.55; }
 }
+@media (max-width: 950px) {
+  .client-index { grid-template-columns: 1fr; gap: 0; min-height: 0; padding-block: .8rem .6rem; }
+}
 @media (max-width: 750px) {
   html { scroll-padding-top: 4.8rem; }
   .site-backdrop { background-image: url("/art/optical-ribbon-mobile.webp"); background-position: 62% center; }
@@ -165,9 +165,7 @@ html { scroll-padding-top: 5.25rem; }
   .hero h1 { font-size: clamp(3.75rem, 12.4vw, 6.3rem); }
   .hero-intro { max-width: 40ch; }
   .hero figure figcaption { margin-top: .45rem; }
-  .client-index { flex-wrap: wrap; gap: .1rem 1.45rem; min-height: 0; padding-block: .8rem .6rem; }
-  .client-index > span { width: 100%; font-size: .57rem; }
-  .client-index a { font-size: 1.25rem; min-height: 37px; }
+  .client-index > span { font-size: .6rem; }
   .project-sheet .section-block, .career-sheet .section-block, .service-layout { padding-block: 3.6rem; }
   .project-sheet .project-grid, .service-layout, .career-sheet .about-grid { grid-template-columns: 1fr; }
   .project-sheet .project-card:first-child { grid-row: auto; }
@@ -181,4 +179,8 @@ html { scroll-padding-top: 5.25rem; }
   .service-layout .service-grid article { padding-block: 1rem 1.2rem; }
   .site-footer .contact-row { min-height: 0; }
   .case-main.shell { width: calc(100% - 1.4rem); padding-inline: 1rem; margin-block: 1.4rem; }
+}
+@media (max-width: 580px) {
+  .client-index ul { display: grid; grid-template-columns: 1.12fr 1fr; gap: 0 .6rem; }
+  .client-index a { gap: .3em; font-size: clamp(.95rem, 4.2vw, 1.25rem); }
 }

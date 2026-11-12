@@ -36,7 +36,16 @@ Estas cifras corresponden a la revisión `f3a8c0e`. La conversión a solicitudes
 
 La portada y las fichas comparten un fondo fijo con dos encuadres. La dirección visual toma como referencia la alternancia de imagen a toda anchura y secciones tipográficas de la [web de Inditex](https://www.inditex.com/itxcomweb/es/es/home). Usamos la foto original como referencia de cámara en ImageGen para convertir sus curvas en láminas de grafito y vidrio azul.
 
-La portada recupera el [escritorio isométrico del portfolio original](public/assets/op1.jpg). Las versiones WebP de 640 y 1024 píxeles incorporan el [recorte](public/art/workstation-mask.svg) en su canal de transparencia. El monitor muestra los proyectos al pasar el puntero, tocar la ilustración o enfocar el botón de la terminal con el teclado.
+El nuevo terminal de aluminio parte del [terminal anterior](public/art/terminal.webp). Las versiones para [móvil](public/art/terminal-modern-640.webp) y [escritorio](public/art/terminal-modern.webp) llevan transparencia en el propio WebP. Sobre el cristal se dibuja un paisaje de líneas; al pasar el puntero, tocarlo o enfocar el botón de la terminal con el teclado se ven los nombres de los proyectos.
+
+<details>
+<summary>Prompt de la imagen de terminal elegida (ImageGen)</summary>
+
+> Redesign the reference CRT as a contemporary standalone desktop terminal. Keep the integrated screen and sloping keyboard in one rigid desktop instrument, and the near-frontal three-quarter view with a little of the right flank visible. Use a flat widescreen OLED in a slim satin natural-aluminium surround, a shallow graphite base, closely spaced charcoal low-profile keys and a single muted lime Return key. No laptop hinge or trackpad. Keep the inside of the display opaque, almost black and blank, with just a quiet glass reflection: the website adds its own live terminal graphics. Premium realistic industrial product photography, softly lit silver edges and cool rim lighting against a future midnight-blue page. Landscape 4:3 composition, one complete object centred with slim breathing room on all sides; real alpha transparency around the silhouette. No floor, setting, furniture, cables, logos, lettering, watermark or background graphics.
+
+</details>
+
+La franja de clientes enlaza a las cuatro fichas: Inditex, Mercedes-Benz, Santander Alemania y AESA. Las secciones de proyectos y trayectoria heredan el tema seleccionado y dejan entrever la fotografía fija en ambos modos.
 
 <details>
 <summary>Referencia, prompt y fondos publicados</summary>

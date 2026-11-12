@@ -1,7 +1,7 @@
 export const locales = ["es", "en"] as const;
 export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = "es";
-export const siteOrigin = "https://porfolio-antlopsou.vercel.app";
+export const siteOrigin = "https://www.antlopsou.dev";
 
 export function isLocale(value: string): value is Locale {
   return locales.some((locale) => locale === value);

@@ -18,13 +18,16 @@ const clientMarks = {
 
 type ClientId = keyof typeof clientMarks;
 
-function ClientMark({ client }: { client: ClientId }) {
+function ClientName({ client, name }: { client: ClientId; name: string }) {
   return (
-    <span
-      aria-hidden="true"
-      className={`client-mark client-mark--${client}`}
-      style={{ maskImage: `url("/assets/${clientMarks[client]}")` }}
-    />
+    <>
+      <span
+        aria-hidden="true"
+        className={`client-mark client-mark--${client}`}
+        style={{ maskImage: `url("/assets/${clientMarks[client]}")` }}
+      />
+      <span className={client === "inditex" ? "sr-only wordmark-name" : undefined}>{name}</span>
+    </>
   );
 }
 
@@ -39,8 +42,7 @@ function ClientExperience({ client, name, role, period, description }: {
     <article id={client}>
       {period && <span className="experience-date">{period}</span>}
       <h4 className="client-heading">
-        <ClientMark client={client} />
-        <span className={client === "inditex" ? "sr-only wordmark-name" : undefined}>{name}</span>
+        <ClientName client={client} name={name} />
       </h4>
       <p className="client-role">{role}</p>
       <p>{description}</p>
@@ -52,7 +54,7 @@ const content = {
   es: {
     role: "Antonio López Soult · Ingeniero frontend", city: "Sevilla, España", title: "Código con", accent: "carácter.",
     intro: "En Inditex desarrollo herramientas para aduanas y transporte. En Mercedes-Benz trabajé en el software que usan sus equipos para gestionar incidencias de producción.",
-    workCta: "Ver proyectos", contactCta: "Hablemos", art: "Escritorio de desarrollo en perspectiva isométrica con monitor panorámico, teclado y silla.",
+    workCta: "Ver proyectos", contactCta: "Hablemos", art: "Terminal de aluminio con pantalla plana, teclado integrado y un paisaje de líneas verdes en el monitor.",
     workLabel: "Desarrollo independiente", work: "Proyectos propios", caseLink: "Ver caso", clientIndex: "Trabajo para clientes",
     servicesLabel: "Servicios", services: "Desarrollo a medida",
     offers: [
@@ -74,7 +76,7 @@ const content = {
   en: {
     role: "Antonio López Soult · Frontend engineer", city: "Seville, Spain", title: "Code with", accent: "character.",
     intro: "I build customs and transport tools for Inditex. At Mercedes-Benz, I worked on the software that teams use to manage incidents on production lines.",
-    workCta: "Explore my work", contactCta: "Let’s talk", art: "Isometric view of a developer’s desk with an ultrawide monitor, keyboard and chair.",
+    workCta: "Explore my work", contactCta: "Let’s talk", art: "Aluminium terminal with a flat display, integrated keyboard and a green wireframe landscape on screen.",
     workLabel: "Independent development", work: "Selected projects", caseLink: "View case study", clientIndex: "Client work",
     servicesLabel: "Services", services: "Custom development",
     offers: [
@@ -99,6 +101,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = content[locale];
+  const clients = [...t.jobs, ...t.consultingClients];
 
   return <>
     <Header locale={locale} />
@@ -127,8 +130,13 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </div>
         <nav className="shell client-index" aria-label={t.clientIndex}>
           <span>{t.clientIndex}</span>
-          <a href="#inditex"><ClientMark client="inditex"/><span className="sr-only wordmark-name">Inditex</span><Glyph name="down" size={15}/></a>
-          <a href="#mercedes-benz"><ClientMark client="mercedes-benz"/>Mercedes-Benz <Glyph name="down" size={15}/></a>
+          <ul>
+            {clients.map(([id, name]) => (
+              <li key={id}>
+                <a href={`#${id}`}><ClientName client={id} name={name} /><Glyph name="down" size={15} /></a>
+              </li>
+            ))}
+          </ul>
         </nav>
       </section>
       <section id="projects" className="project-sheet" aria-labelledby="projects-title"><div className="shell section-block">

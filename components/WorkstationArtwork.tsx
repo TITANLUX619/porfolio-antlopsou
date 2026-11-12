@@ -21,22 +21,31 @@ export function WorkstationArtwork({ alt, names }: { alt: string; names: string[
       onPointerUp={event => { if (event.pointerType === "touch") showOnTap(); }}>
       <span className="workstation-model">
         <picture>
-          <source type="image/webp" srcSet="/art/workstation-640.webp 640w, /art/workstation.webp 1024w"
-            sizes="(max-width: 520px) 78vw, (max-width: 750px) 390px, (max-width: 1350px) 36vw, 490px" />
-          <img src="/assets/op1.jpg" width={1024} height={1024} alt={alt} fetchPriority="high" />
+          <source type="image/webp" srcSet="/art/terminal-modern-640.webp 640w, /art/terminal-modern.webp 1200w"
+            sizes="(max-width: 520px) calc(100vw - 40px), (max-width: 750px) 480px, (max-width: 1450px) 43vw, 620px" />
+          <img src="/art/terminal-modern.webp" width={1200} height={900} alt={alt} fetchPriority="high" />
         </picture>
-        <svg className="workstation-screen" viewBox="0 0 1024 1024" aria-hidden="true" focusable="false">
-          {/* The overlay follows the glass in the original square illustration. */}
-          <g transform="matrix(1 -.524 0 1 74 363)">
-            <rect width="504" height="190" fill="#84c6ff" fillOpacity=".16" />
-            <rect width="324" height="190" fill="#102433" />
-            <path d="M0 47h324M324 0v190" fill="none" stroke="#507282" strokeWidth="2" />
-            <svg width="324" height="190" overflow="hidden" fontFamily="monospace">
-              <text x="20" y="32" fontSize="22" fill="#aee3ed">antlopsou.dev</text>
-              {names.map((name, index) => (
-                <text key={name} className="workstation-project" x="20" y={84 + index * 43}
-                  fontSize="35" fill="#e8f6f7" style={{ animationDelay: `${index * 75}ms` }}>{name}</text>
-              ))}
+        <svg className="workstation-screen" viewBox="0 0 1448 1086" aria-hidden="true" focusable="false">
+          {/* Keep the pixels on the glass in both responsive image sizes. */}
+          <g transform="matrix(1 .008 -.064 1 254 153)">
+            <svg width="806" height="474" overflow="hidden" fontFamily="ui-monospace, Consolas, monospace">
+              <circle cx="37" cy="42" r="6" fill="#bef26e" />
+              <text x="57" y="52" fontSize="31" fill="#d5e4db">antlopsou.dev</text>
+              <path d="M28 75h745" stroke="#899f94" strokeOpacity=".48" strokeWidth="2" />
+              <g className="screen-landscape">
+                <image href="/art/terminal-landscape.svg" x="16" y="89" width="774" height="290" />
+                <path d="m43 402 14 12-14 12" fill="none" stroke="#bdf275" strokeWidth="5" />
+                <path className="screen-caret" d="M68 427h25" stroke="#bdf275" strokeWidth="5" />
+              </g>
+              <g className="screen-directory">
+                <text x="36" y="147" fontSize="38" fill="#bdf275">&gt; ls projects</text>
+                {names.map((name, index) => (
+                  <text key={name} className="workstation-project" x="38" y={228 + index * 72}
+                    fontSize="49" fill="#eff6f0" style={{ animationDelay: `${index * 65}ms` }}>
+                    <tspan fill="#93b6aa">./</tspan>{name}
+                  </text>
+                ))}
+              </g>
             </svg>
           </g>
         </svg>
