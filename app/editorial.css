@@ -161,8 +161,8 @@ html { scroll-padding-top: 5.25rem; }
     animation-timing-function: cubic-bezier(.42,0,.42,1);
     animation-fill-mode: both;
   }
-  @supports (animation-timeline: view(block 0px)) {
-    [data-enter-from] {
+  @supports (animation-timeline: view(block 0px)) and (animation-duration: auto) {
+    :root:not([data-scroll-fallback]) [data-enter-from] {
       animation-duration: auto; animation-delay: 0s; animation-play-state: running;
       animation-timeline: view(block 0px);
     }

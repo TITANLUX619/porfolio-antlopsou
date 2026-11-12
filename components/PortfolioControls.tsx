@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { Locale } from "@/i18n/routing";
-import { motionStorageKey, reducedMotionQuery } from "@/lib/motion";
+import { motionStorageKey, reducedMotionQuery, visitMotionStorageKey } from "@/lib/motion";
 import { Glyph } from "./Glyph";
 
 export function MotionControl({ locale }: { locale: Locale }) {
@@ -10,6 +10,8 @@ export function MotionControl({ locale }: { locale: Locale }) {
   function toggle() {
     const root = document.documentElement;
     const next = root.dataset.motion === "on" ? "off" : "on";
+    delete root.dataset.visitMotion;
+    try { sessionStorage.removeItem(visitMotionStorageKey); } catch { /* Storage can be unavailable. */ }
     root.dataset.motion = next;
     try {
       const system = matchMedia(reducedMotionQuery).matches ? "off" : "on";

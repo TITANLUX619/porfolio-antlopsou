@@ -21,31 +21,11 @@ export const studioMonitor = {
     aspectRatio: `${photo.width} / ${photo.height}`,
     transform: `translate(${-100 * focusX}%, ${-100 * focusY}%)`,
   },
+  glassStyle: {
+    left: `${100 * glass.left / photo.width}%`,
+    top: `${100 * glass.top / photo.height}%`,
+    width: `${100 * (glass.right - glass.left) / photo.width}%`,
+    height: `${100 * (glass.bottom - glass.top) / photo.height}%`,
+  },
   transformOrigin: `${100 * focusX}% ${100 * focusY}%`,
 };
-
-export function entranceCamera(device: DOMRect, width: number, height: number, previewDepth: number) {
-  const cx = device.left + device.width * focusX, cy = device.top + device.height * focusY;
-  const halfW = device.width * (glass.right - glass.left) / (2 * photo.width);
-  const halfH = device.height * (glass.bottom - glass.top) / (2 * photo.height);
-  // A small bleed clears the last antialiased bezel pixel on fractional viewports.
-  const zoom = Math.max(cx / halfW, (width - cx) / halfW, cy / halfH, (height - cy) / halfH) * 1.006;
-  // The small monitor is wide even on a phone. Frame the first section
-  // together with the hero, then ease into the visitor's actual viewport.
-  const previewWidth = Math.max(width, previewDepth * halfW / halfH);
-  const hardware: Keyframe[] = [], aperture: Keyframe[] = [], page: Keyframe[] = [];
-
-  // Sample the same camera path once for all three native browser animations.
-  for (let i = 0; i <= 24; i++) {
-    const t = i / 24, scale = zoom ** t;
-    hardware.push({ offset: t, transform: `scale(${scale})` });
-    const l = Math.max(0, cx - halfW * scale), r = Math.min(width, cx + halfW * scale);
-    const u = Math.max(0, cy - halfH * scale), b = Math.min(height, cy + halfH * scale);
-    aperture.push({ offset: t, clipPath: `inset(${u}px ${width - r}px ${height - b}px ${l}px)` });
-
-    const blend = t * t * (3 - 2 * t);
-    const pageWidth = previewWidth + (width - previewWidth) * blend;
-    page.push({ offset: t, width: `${pageWidth}px`, transform: `translate(${l}px, ${u}px) scale(${(r - l) / pageWidth})` });
-  }
-  return { hardware, aperture, page };
-}

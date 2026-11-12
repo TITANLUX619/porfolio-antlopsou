@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale, locales, siteOrigin } from "@/i18n/routing";
-import { motionStorageKey, reducedMotionQuery } from "@/lib/motion";
+import { motionStorageKey, reducedMotionQuery, visitMotionStorageKey } from "@/lib/motion";
 import "../globals.css";
 import "../editorial.css";
 
@@ -61,10 +61,9 @@ const restorePreferences = `(() => {
   function updateMotion() {
     let choice;
     try { choice = localStorage.getItem("${motionStorageKey}"); } catch {}
-    root.dataset.motion = choice === "on" || choice === "off" ? choice : systemMotion.matches ? "off" : "on";
+    root.dataset.motion = root.dataset.visitMotion || (choice === "on" || choice === "off" ? choice : systemMotion.matches ? "off" : "on");
   }
   try { if (localStorage.getItem("theme") === "light") root.dataset.theme = "light"; } catch {}
-  updateMotion();
   if (!location.hash && ${JSON.stringify(locales.flatMap(locale => [`/${locale}`, `/${locale}/`]))}.includes(location.pathname)) {
     try {
       const navigationType = performance.getEntriesByType?.("navigation")[0]?.type
@@ -78,10 +77,19 @@ const restorePreferences = `(() => {
       }
     } catch {}
   }
+  try {
+    if (root.dataset.entrance) sessionStorage.removeItem("${visitMotionStorageKey}");
+    else if (sessionStorage.getItem("${visitMotionStorageKey}") === "on") root.dataset.visitMotion = "on";
+  } catch {}
+  updateMotion();
   systemMotion.addEventListener("change", updateMotion);
   window.addEventListener("pageshow", updateMotion);
   window.addEventListener("storage", event => {
-    if (event.key === "${motionStorageKey}" || event.key === null) updateMotion();
+    if (event.key === "${motionStorageKey}" || event.key === null) {
+      delete root.dataset.visitMotion;
+      try { sessionStorage.removeItem("${visitMotionStorageKey}"); } catch {}
+      updateMotion();
+    }
   });
 })();`;
 
