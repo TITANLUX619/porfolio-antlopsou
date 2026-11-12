@@ -111,7 +111,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   }));
 
   return <PortfolioEntrance locale={locale}>
-    <SectionReveals />
     <Header locale={locale} />
     <main id="main" tabIndex={-1}>
       <section className="hero photo-window" aria-labelledby="hero-title">
@@ -199,6 +198,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </div>
       </div></section>
     </main>
+    <SectionReveals />
     <Footer locale={locale}><MotionControl locale={locale}/><StudioTerminal locale={locale} cases={caseIndex}/></Footer>
   </PortfolioEntrance>;
 }
