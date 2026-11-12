@@ -65,21 +65,12 @@
   height: auto;
 }
 
-.case-figure-kollab .case-screen,
-.case-figure-meridian .case-screen {
+.case-figure-trento-consulting .case-screen {
   padding: clamp(1rem, 5vw, 4.5rem);
+  background: linear-gradient(135deg, #ddcfbf, #bba890);
 }
 
-.case-figure-kollab .case-screen {
-  background: linear-gradient(140deg, #456780, #213348 75%);
-}
-
-.case-figure-meridian .case-screen {
-  background: linear-gradient(125deg, #c6cfea, #91a1c7);
-}
-
-.case-figure-kollab img,
-.case-figure-meridian img {
+.case-figure-trento-consulting img {
   border-radius: 5px;
   box-shadow: 0 20px 50px #10131c3b;
 }

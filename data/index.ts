@@ -73,40 +73,6 @@ export const skills = {
   right: ["Jest", "Redux", "Tailwind"]
 }
 
-export const projects = [
-  {
-    id: 1,
-    title: "projects.1.title",
-    des: "projects.1.des",
-    img: "/assets/kollab.png",
-    iconLists: ["/assets/re.svg", "/assets/tail.svg", "/assets/ts.svg", "/assets/three.svg", "/assets/fm.svg"],
-    link: "https://kollab-web-app.vercel.app/",
-  },
-  {
-    id: 2,
-    title: "projects.2.title",
-    des: "projects.2.des",
-    img: "/assets/meridian.png",
-    iconLists: ["/assets/next.svg", "/assets/tail.svg", "/assets/ts.svg", "/assets/stream.svg", "/assets/c.svg"],
-    link: "https://meridian-web-app-jade.vercel.app/",
-  },
-  {
-    id: 3,
-    title: "projects.3.title",
-    des: "projects.3.des",
-    img: "/assets/p3.svg",
-    iconLists: ["/assets/re.svg", "/assets/tail.svg", "/assets/ts.svg", "/assets/three.svg", "/assets/c.svg"],
-    link: "/ui.aiimg.com",
-  },
-  {
-    id: 4,
-    title: "projects.4.title",
-    des: "projects.4.des",
-    img: "/assets/p4.svg",
-    iconLists: ["/assets/next.svg", "/assets/tail.svg", "/assets/ts.svg", "/assets/three.svg", "/assets/gsap.svg"],
-    link: "/ui.apple.com",
-  },
-];
 
 export const testimonials = [
   {

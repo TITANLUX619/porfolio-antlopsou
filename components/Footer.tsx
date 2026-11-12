@@ -1,6 +1,7 @@
 import { FaLocationArrow } from "react-icons/fa6";
 
 import { socialMedia } from "@/data";
+import { contactEmail } from "@/data/contact";
 import MagicButton from "@/components/MagicButton";
 import { getTranslations } from "next-intl/server";
 import SocialMediaButton from "./SocialMediaButton";
@@ -30,7 +31,7 @@ const Footer = async () => {
         <p className="text-indigo-950/75 md:mt-10 my-5 text-center">
           {t('footer.subtitle')}
         </p>
-        <a href="mailto:antlopsou@gmail.com">
+        <a href={`mailto:${contactEmail}`}>
           <MagicButton
             title="Let's get in touch"
             icon={<FaLocationArrow />}

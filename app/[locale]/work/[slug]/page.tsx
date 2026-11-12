@@ -10,22 +10,20 @@ type PageProps = { params: Promise<{ locale: string; slug: string }> };
 
 const labels = {
   es: {
-    back: "Todos los proyectos",
-    context: "El punto de partida",
-    implementation: "Qué desarrollé",
-    result: "El resultado",
+    back: "Volver a los proyectos",
+    context: "Contexto",
+    implementation: "Mi aportación",
+    result: "Resultado",
     technology: "Tecnologías",
-    demo: "Ver la demostración",
-    next: "Siguiente proyecto",
+    next: "Siguiente caso",
   },
   en: {
-    back: "All projects",
-    context: "The starting point",
-    implementation: "What I built",
-    result: "The outcome",
+    back: "Back to projects",
+    context: "Context",
+    implementation: "My contribution",
+    result: "Outcome",
     technology: "Technologies",
-    demo: "Watch the demo",
-    next: "Next project",
+    next: "Next case study",
   },
 };
 
@@ -79,7 +77,7 @@ export default async function CasePage({ params }: PageProps) {
   const route = await params;
   const { locale, project, copy } = getCase(route.locale, route.slug);
   const t = labels[locale];
-  const next = projects[(projects.indexOf(project) + 1) % projects.length];
+  const next = projects.length > 1 ? projects[(projects.indexOf(project) + 1) % projects.length] : null;
 
   return (
     <>
@@ -129,22 +127,22 @@ export default async function CasePage({ params }: PageProps) {
               <section>
                 <h2>{t.result}</h2>
                 <p>{copy.result}</p>
-                {project.demo && (
-                  <a className="button button-primary case-demo" href={project.demo}>
-                    {t.demo} <span aria-hidden="true">↗</span>
+                {project.external && (
+                  <a className="button button-primary case-demo" href={project.external.url}>
+                    {project.external.label[locale]} <span aria-hidden="true">↗</span>
                   </a>
                 )}
               </section>
             </div>
           </div>
         </article>
-        <a className="case-next" href={`/${locale}/work/${next.slug}`}>
+        {next && <a className="case-next" href={`/${locale}/work/${next.slug}`}>
           <span>
             <span className="eyebrow">{t.next}</span>
             <strong>{next.name}</strong>
           </span>
           <span className="case-next-arrow" aria-hidden="true">→</span>
-        </a>
+        </a>}
       </main>
       <Footer locale={locale} slug={project.slug} />
     </>

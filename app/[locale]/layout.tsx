@@ -8,8 +8,8 @@ import "../editorial.css";
 const name = "Antonio López Soult";
 const brand = "antlopsou.dev";
 const descriptions = {
-  es: "Antonio López Soult, ingeniero frontend en Sevilla. Proyectos para Inditex y Mercedes-Benz, aplicaciones propias y automatizaciones con React y TypeScript.",
-  en: "Antonio López Soult, a frontend engineer in Seville. Work for Inditex and Mercedes-Benz, independent applications and automation with React and TypeScript.",
+  es: "Antonio López Soult, ingeniero de software en Sevilla. Aplicaciones web y móviles, automatización y arquitectura frontend. Proyectos: ConsultIA y Trento Consulting.",
+  en: "Antonio López Soult, a software engineer in Seville. Web and mobile development, automation and frontend architecture. Projects: ConsultIA and Trento Consulting.",
 };
 
 type LocaleParams = { params: Promise<{ locale: string }> };
@@ -65,6 +65,19 @@ const restorePreferences = `(() => {
   }
   try { if (localStorage.getItem("theme") === "light") root.dataset.theme = "light"; } catch {}
   updateMotion();
+  if (!location.hash && ${JSON.stringify(locales.flatMap(locale => [`/${locale}`, `/${locale}/`]))}.includes(location.pathname)) {
+    try {
+      const navigationType = performance.getEntriesByType?.("navigation")[0]?.type
+        ?? (["navigate", "reload", "back_forward"][performance.navigation?.type] || "navigate");
+      const internal = document.referrer && new URL(document.referrer).origin === location.origin;
+      if (navigationType === "reload" || (navigationType === "navigate" && !internal)) {
+        root.dataset.entrance = "standby";
+        const clearEntrance = () => { delete root.dataset.entrance; };
+        window.addEventListener("hashchange", clearEntrance, { once: true });
+        window.addEventListener("pagehide", clearEntrance, { once: true });
+      }
+    } catch {}
+  }
   systemMotion.addEventListener("change", updateMotion);
   window.addEventListener("pageshow", updateMotion);
   window.addEventListener("storage", event => {
@@ -84,7 +97,10 @@ export default async function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: restorePreferences }} />
       </head>
-      <body><div className="site-backdrop" aria-hidden="true" />{children}</body>
+      <body>
+        <div className="site-backdrop" aria-hidden="true" />
+        {children}
+      </body>
     </html>
   );
 }
