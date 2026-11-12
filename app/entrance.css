@@ -1,4 +1,4 @@
-.entrance-stage, .entrance-power, .entrance-skip { display: none; }
+.entrance-stage, .entrance-power { display: none; }
 .entrance-viewport { isolation: isolate; }
 
 /* Without the pre-paint opt-in the server-rendered portfolio is usable as-is. */
@@ -40,9 +40,7 @@
   position: absolute; inset: calc(100% + .8rem) auto auto 50%; transform: translateX(-50%);
   white-space: nowrap; color: #f2f6e8; font: .71rem/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase;
 }
-.entrance-power .power-starting, .entrance-power .power-with-motion,
-:root[data-entrance="starting"] .power-ready, :root[data-motion="off"] .power-ready { display: none; }
-:root[data-entrance="standby"][data-motion="off"] .power-with-motion,
+.entrance-power .power-starting, :root[data-entrance="starting"] .power-ready { display: none; }
 :root[data-entrance="starting"] .power-starting { display: inline; }
 :root[data-entrance="starting"] .entrance-power { cursor: progress; }
 :root[data-entrance="standby"] .entrance-power:is(:hover, :focus-visible) {
@@ -50,16 +48,4 @@
 }
 .entrance-power:focus-visible { outline: 2px solid #e8ffca; outline-offset: 6px; }
 .entrance-power:active svg { transform: scale(.92); }
-:root[data-entrance] .entrance-skip {
-  position: fixed; z-index: 3; right: max(1.25rem, env(safe-area-inset-right)); bottom: max(1.25rem, env(safe-area-inset-bottom));
-  display: inline-flex; align-items: center; gap: .7rem; min-height: 44px; padding: .55rem 1rem;
-  border: 1px solid #b0bbb15e; border-radius: 100px; background: #10161ee8; color: #f0f2ea; font: .73rem/1.3 var(--mono);
-}
-.entrance-skip:is(:hover,:focus-visible) { border-color: #c3f56b; }
-.entrance-skip svg { color: #c3f56b; }
-.entrance-skip .skip-motion, :root[data-motion="off"] .skip-intro { display: none; }
-:root[data-motion="off"] .skip-motion { display: inline; }
-:root[data-entrance="standby"][data-motion="off"] .entrance-skip {
-  left: 50%; right: auto; top: calc(50% + 4.8rem); bottom: auto; translate: -50% 0; white-space: nowrap;
-}
 @media (max-width: 700px) { .entrance-device-slot { width: min(100vw, 103svh); } }

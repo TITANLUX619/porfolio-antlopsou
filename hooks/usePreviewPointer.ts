@@ -24,7 +24,6 @@ export function usePreviewPointer<T extends HTMLElement>() {
     function point(event: PointerEvent) {
       if (event.pointerType === "touch") return;
       if (!target.hasAttribute("data-pointing")) target.dataset.pointing = "";
-      if (document.documentElement.dataset.motion !== "on") return;
       clientX = event.clientX;
       clientY = event.clientY;
       if (!frame) frame = requestAnimationFrame(draw);

@@ -3,7 +3,6 @@ import { join } from "node:path";
 import type { CSSProperties, ReactNode } from "react";
 import type { Locale } from "@/i18n/routing";
 import { studioMonitor } from "@/lib/entrance-camera";
-import { visitMotionStorageKey } from "@/lib/motion";
 import { Glyph } from "./Glyph";
 import "@/app/entrance.css";
 
@@ -27,17 +26,11 @@ export function PortfolioEntrance({ children, locale }: { children: ReactNode; l
         </div>
       </div>
     </div>
-    <button id="entrance-power" type="button" className="entrance-power" data-visit-motion-key={visitMotionStorageKey} hidden>
+    <button id="entrance-power" type="button" className="entrance-power" hidden>
       <Glyph name="power" size={30} />
       <span className="power-ready">{es ? "Encender" : "Power on"}</span>
-      <span className="power-with-motion">{es ? "Encender con animaciones" : "Power on with animations"}</span>
       <span className="power-starting">{es ? "Encendiendo…" : "Starting…"}</span>
     </button>
-    <a href="#main" className="entrance-skip" hidden>
-      <span className="skip-intro">{es ? "Saltar intro" : "Skip intro"}</span>
-      <span className="skip-motion">{es ? "Entrar sin animaciones" : "Enter without animations"}</span>
-      <Glyph name="right" size={15} />
-    </a>
     <script dangerouslySetInnerHTML={{ __html: monitorScript }} />
     <div className="entrance-aperture" suppressHydrationWarning><div className="entrance-viewport">
       {children}
