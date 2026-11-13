@@ -78,12 +78,14 @@ const initializePage = `(() => {
   window.addEventListener("pagehide", () => {
     try { sessionStorage.setItem(themeKey, root.dataset.theme); } catch {}
     delete root.dataset.entrance;
+    delete root.dataset.entrancePhoto;
   });
   window.addEventListener("pageshow", event => {
     if (event.persisted) resumeVisit(true);
   });
   if (!fromHistory && !resumed && !location.hash && ${JSON.stringify(locales.flatMap(locale => [`/${locale}`, `/${locale}/`]))}.includes(location.pathname)) {
     root.dataset.entrance = "standby";
+    root.dataset.entrancePhoto = "pending";
     window.addEventListener("hashchange", () => { delete root.dataset.entrance; }, { once: true });
   }
 })();`;
@@ -101,7 +103,10 @@ export default async function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: initializePage }} />
       </head>
       <body>
-        <div className="site-backdrop" aria-hidden="true" />
+        <picture className="site-backdrop">
+          <source media="(max-width: 750px)" srcSet="/art/optical-ribbon-mobile.webp" />
+          <img src="/art/optical-ribbon.webp" width={1672} height={941} alt="" fetchPriority="high" />
+        </picture>
         {children}
       </body>
     </html>

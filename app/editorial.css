@@ -5,7 +5,10 @@ body { isolation: isolate; background-color: #0c111b; }
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: #0c111b url("/art/optical-ribbon.webp") 56% center / cover no-repeat;
+  background-color: #0c111b;
+}
+.site-backdrop img {
+  display: block; width: 100%; height: 100%; object-fit: cover; object-position: 56% center;
 }
 .site-backdrop::after {
   content: "";
@@ -193,7 +196,7 @@ html { scroll-padding-top: 5.25rem; }
 @media (max-width: 750px) {
   .service-sheet, .career-sheet { --entry-distance: clamp(3rem, 19vw, 5.75rem); }
   html { scroll-padding-top: 4.8rem; }
-  .site-backdrop { background-image: url("/art/optical-ribbon-mobile.webp"); background-position: 62% center; }
+  .site-backdrop img { object-position: 62% center; }
   .site-backdrop::after { background: linear-gradient(105deg,#070c16bf, #0910206b 52%, #0c13212e 84%), linear-gradient(180deg,#050b132b 18%,#050b1387 41%,#050b1330 61%,#04091366 100%); }
   .header-inner { min-height: 62px; }
   .hero-inner { grid-template-columns: 1fr; min-height: 0; gap: 1.35rem; padding-block: 3.25rem 1.85rem; }
