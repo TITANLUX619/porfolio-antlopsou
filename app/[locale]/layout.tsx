@@ -7,8 +7,8 @@ import "../editorial.css";
 const name = "Antonio López Soult";
 const brand = "antlopsou.dev";
 const descriptions = {
-  es: "Antonio López Soult, ingeniero de software en Sevilla. Aplicaciones web y móviles, automatización y arquitectura frontend. Proyectos: ConsultIA y Trento Consulting.",
-  en: "Antonio López Soult, a software engineer in Seville. Web and mobile development, automation and frontend architecture. Projects: ConsultIA and Trento Consulting.",
+  es: "Antonio López Soult, ingeniero de software en Sevilla. Aplicaciones web y móviles, automatización y arquitectura frontend. Proyectos: ConsultIA y Trento Desarrollo.",
+  en: "Antonio López Soult, a software engineer in Seville. Web and mobile development, automation and frontend architecture. Projects: ConsultIA and Trento Desarrollo.",
 };
 
 type LocaleParams = { params: Promise<{ locale: string }> };

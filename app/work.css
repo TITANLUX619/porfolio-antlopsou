@@ -65,16 +65,6 @@
   height: auto;
 }
 
-.case-figure-trento-consulting .case-screen {
-  padding: clamp(1rem, 5vw, 4.5rem);
-  background: linear-gradient(135deg, #ddcfbf, #bba890);
-}
-
-.case-figure-trento-consulting img {
-  border-radius: 5px;
-  box-shadow: 0 20px 50px #10131c3b;
-}
-
 .case-figure figcaption {
   margin: .85rem 0 0;
   color: var(--muted);
