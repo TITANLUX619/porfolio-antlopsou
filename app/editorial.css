@@ -70,13 +70,15 @@ html { scroll-padding-top: 5.25rem; }
 .service-sheet {
   background-color: color-mix(in srgb, var(--panel) 90%, transparent); color: var(--fg);
 }
-.project-window { --window-shade: linear-gradient(100deg, #080d17cf, #0b1220b8 58%, #0b1220a8); }
+.project-window {
+  --window-shade: linear-gradient(100deg, #080d17cf, #0b1220b8 58%, #0b1220a8);
+  overflow-x: clip;
+}
 .project-window .section-block, .career-sheet .section-block { padding-block: clamp(4rem, 7vw, 7.5rem); }
 .project-window .section-title, .spread-heading .section-title { font-size: clamp(3.2rem, 5.8vw, 6.25rem); }
 .project-window .section-title { margin-bottom: clamp(2rem, 3.4vw, 3.7rem); }
 .project-window .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.3rem clamp(2rem, 4vw, 4rem); }
 .project-window .project-card { display: grid; grid-template-rows: 1fr auto; }
-.project-window .project-art { border-radius: 3px; aspect-ratio: 1.65; }
 .project-window .project-body h3 { font-size: clamp(1.9rem, 3vw, 3rem); }
 .case-public-link { display: inline-flex; align-items: center; gap: .3rem; min-height: 36px; font-size: .84rem; font-weight: 600; text-decoration: underline; text-underline-offset: .23em; }
 .case-public-link:hover { color: var(--accent); }

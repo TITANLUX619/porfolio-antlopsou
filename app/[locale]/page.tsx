@@ -157,14 +157,11 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         <h2 id="projects-title" className="section-title">{t.projectsTitle}<span aria-hidden="true">.</span></h2>
         <div className="project-grid">{projects.map(project => <article className="project-card" key={project.slug}>
           <ProjectCardLink href={`/${locale}/work/${project.slug}`} label={`${t.caseLink} · ${project.name}`}>
-            <div className={`project-art project-art-${project.slug}`}>
-              <div className="shot-frame">
-                {project.visual === "website" && <div className="window-bar" aria-hidden="true"><i/><i/><i/></div>}
-                <Image src={`/work/${project.slug}.webp`} alt={project[locale].alt} width={project.width} height={project.height}
-                  style={{ viewTransitionName: `case-image-${project.slug}` }}
-                  sizes="(max-width: 750px) 86vw, (max-width: 1280px) 42vw, 540px"/>
-              </div>
-              <span className="case-invitation" aria-hidden="true">{t.caseLink}<Glyph name="upRight" size={15}/></span>
+            <div className="project-preview">
+              <Image src={project.preview.src} alt={project.preview.alt[locale]}
+                width={project.preview.width} height={project.preview.height}
+                style={{ viewTransitionName: `case-image-${project.slug}` }}
+                sizes="(max-width: 360px) calc(100vw - 2rem), (max-width: 750px) min(620px, 100vw - 2.5rem), (max-width: 1408px) 44vw, 612px" />
             </div>
             <div className="project-body"><p className="project-category">{project[locale].category}</p>
               <h3>{project.name} <span className="card-link"><Glyph name="upRight" size={20} /></span></h3>

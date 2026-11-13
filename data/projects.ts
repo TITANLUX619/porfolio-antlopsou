@@ -16,7 +16,7 @@ type Project = Record<Locale, ProjectCopy> & {
   stack: string[];
   width: number;
   height: number;
-  visual: "mobile" | "website";
+  preview: { src: string; width: number; height: number; alt: Record<Locale, string> };
   external?: { url: string; label: Record<Locale, string> };
 };
 
@@ -27,7 +27,13 @@ export const projects: Project[] = [
     stack: ["React Native", "Expo", "TypeScript", "Node.js"],
     width: 1440,
     height: 810,
-    visual: "mobile",
+    preview: {
+      src: "/work/consultia-home.webp", width: 1440, height: 900,
+      alt: {
+        es: "Portada de ConsultIA con el mensaje «Menos cosas en la cabeza» y la vista de la app en un móvil.",
+        en: "ConsultIA homepage with its Spanish headline and a phone showing the app’s home screen.",
+      },
+    },
     external: { url: "https://consultia-landing-beta.vercel.app/#demo", label: { es: "Ver la demo de ConsultIA", en: "Explore the ConsultIA demo" } },
     es: {
       category: "Producto propio · Salud digital",
@@ -54,7 +60,13 @@ export const projects: Project[] = [
     stack: ["Next.js", "TypeScript", "CSS Modules"],
     width: 1440,
     height: 900,
-    visual: "website",
+    preview: {
+      src: "/work/trento-consulting.webp", width: 1440, height: 900,
+      alt: {
+        es: "Portada de Trento Consulting con el titular «Tu clínica, con visión de negocio» junto a la recepción de una clínica.",
+        en: "Trento Consulting homepage with its consultancy headline alongside a clinic reception.",
+      },
+    },
     external: { url: "https://trentodesarrollo.es/", label: { es: "Visitar trentodesarrollo.es", en: "Visit trentodesarrollo.es" } },
     es: {
       category: "Web corporativa · Consultoría",
