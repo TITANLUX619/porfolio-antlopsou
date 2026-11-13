@@ -1,51 +1,101 @@
-.entrance-stage, .entrance-power { display: none; }
+/* Outside the intro these wrappers generate no boxes: the same page can scroll
+   normally, including on a direct link or with JavaScript disabled. */
+.entrance-stage, .entrance-terminal, .entrance-window, .entrance-pane { display: contents; }
+.entrance-titlebar, .entrance-transcript, .entrance-tap { display: none; }
 .entrance-viewport { isolation: isolate; }
 
-/* Without the pre-paint opt-in the server-rendered portfolio is usable as-is. */
 :root[data-entrance] { overflow-y: scroll; }
 :root[data-entrance] .entrance-stage {
-  position: fixed; inset: 0; z-index: 1; display: block; overflow: hidden; pointer-events: none;
+  position: relative; height: 100dvh; display: grid; place-items: center; overflow: clip;
 }
-.entrance-device-slot {
-  position: absolute; left: 50%; top: 50%; width: min(78vw, 103svh, 940px);
+:root[data-entrance] .entrance-terminal {
+  /* The previous screen measured 1205 by 629 pixels in a 1536px-wide photo. */
+  --photo-width: min(78vw, 103svh, 940px);
+  --bar-height: clamp(1.85rem, 4svh, 2.65rem);
+  --frame-radius: 13px;
+  position: relative; display: block;
+  container-type: inline-size;
+  width: calc(var(--photo-width) * 1205 / 1536 * 1.15);
+  aspect-ratio: 1205 / 629;
 }
-.entrance-glass-bounds { position: absolute; pointer-events: none; }
-.entrance-device { position: relative; width: 100%; height: 100%; }
-.entrance-device::before {
-  content: ""; position: absolute; inset: 92% 13% -1%; border-radius: 50%;
-  background: radial-gradient(ellipse, #020408b8, transparent 69%);
+:root[data-entrance] .entrance-window {
+  position: absolute; inset: 0; display: flex; flex-direction: column; overflow: hidden;
+  border: 1px solid #acbbc15e;
+  border-radius: var(--frame-radius);
+  box-shadow: 0 24px 80px -18px #000a, 0 3px 12px #0005;
+  /* Center the zoom on the content below the title bar. */
+  transform-origin: 50% calc(50% + var(--bar-height) / 2);
 }
-.entrance-device picture, .entrance-device img { display: block; position: relative; width: 100%; height: 100%; }
-/* Keep the photographed dark glass until the visitor switches the monitor on. */
-:root[data-entrance="playing"] .entrance-device img {
-  -webkit-mask-image: var(--glass-cutout);
-  mask-image: var(--glass-cutout);
+:root[data-entrance] .entrance-titlebar {
+  position: relative; flex: 0 0 var(--bar-height); display: grid; place-items: center;
+  border-bottom: 1px solid #c3ced125; background: rgb(27 29 30 / 94%);
+  color: #bec4c4; font: 500 .75rem/1 "DM Sans", sans-serif; letter-spacing: .025em;
+}
+.entrance-title { display: inline-flex; align-items: center; gap: .45rem; }
+.entrance-title svg { color: #c3f56b; }
+.entrance-lights {
+  position: absolute; left: clamp(.85rem, 2.1vw, 1.25rem); display: flex; gap: 6px;
+}
+.entrance-lights i { width: 8px; height: 8px; border-radius: 50%; background: #c47d73; }
+.entrance-lights i:nth-child(2) { background: #c5a061; }
+.entrance-lights i:last-child { background: #8ba678; }
+.entrance-tap {
+  position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; padding: 0;
+  border: 0; border-radius: var(--frame-radius); background: transparent;
+}
+.entrance-tap:focus-visible, .entrance-key-hint:focus-visible { outline: 2px solid #c3f56b; outline-offset: 4px; }
+:root[data-entrance] .entrance-pane {
+  position: relative; display: block; flex: 1; min-height: 0;
+}
+:root[data-entrance] .entrance-transcript {
+  position: absolute; inset: 0; display: block; padding: clamp(.65rem, 2.4cqi, 1.2rem) clamp(.8rem, 3cqi, 1.5rem);
+  overflow: hidden; font-family: var(--mono); color-scheme: dark;
+  color: #eff1e9; background-color: rgb(0 0 0 / 74%);
+}
+.entrance-line {
+  display: flex; align-items: baseline; gap: .38em; white-space: nowrap;
+  font-size: clamp(.96rem, 3cqi, 1.4rem); line-height: 1.4; letter-spacing: -.025em;
+}
+.entrance-line code { font: inherit; }
+.entrance-line code > span { color: #c3f56b; }
+.entrance-prompt { color: #a1aa9d; }
+.entrance-caret {
+  align-self: center; width: .42em; height: .9em; margin-left: -.14em;
+  background: #c3f56b; animation: entrance-caret-blink 1.15s step-end 3;
+}
+@keyframes entrance-caret-blink { 0%, 55%, 100% { opacity: 1; } 56%, 99% { opacity: 0; } }
+.entrance-hint {
+  margin-top: .45rem; color: #b6bdb8;
+  font-size: clamp(.7rem, 1vw, .82rem); line-height: 1.6;
+}
+.entrance-hint kbd {
+  padding: .12em .48em; border: 1px solid #7b857a; border-radius: 4px;
+  font: inherit; color: #eff1e9; background: #131815;
+}
+.entrance-hint kbd span { color: #c3f56b; }
+.entrance-touch-hint, .entrance-output { display: none; }
+.entrance-output {
+  margin-top: .35rem; font-size: clamp(.7rem, 2.1cqi, .94rem); line-height: 1.5;
+}
+.entrance-output-line {
+  width: max-content; white-space: pre; color: #d5d9d3;
+}
+.entrance-output-line span { color: #a6c58d; }
+@media (hover: none) and (pointer: coarse) {
+  .entrance-key-hint { display: none; }
+  .entrance-touch-hint { display: inline; }
+  :root[data-entrance="standby"] .entrance-tap { display: block; }
+}
+@media (max-width: 700px) { :root[data-entrance] .entrance-terminal { --photo-width: min(100vw, 103svh); } }
+@media (max-height: 300px) { .entrance-line { font-size: min(1.5rem, 6svh); } }
+:root:is([data-entrance="starting"], [data-entrance="building"]) :is(.entrance-hint, .entrance-caret) { display: none; }
+:root[data-entrance="building"] .entrance-output { display: block; }
+:root[data-entrance="playing"] .entrance-transcript { display: none; }
+:root[data-entrance="building"] .entrance-preview {
+  height: var(--preview-height); clip-path: inset(0 100% 0 0);
 }
 :root[data-entrance] .entrance-aperture {
-  position: relative; z-index: 2; height: 100dvh; overflow: clip; pointer-events: none;
+  position: absolute; inset: 0; overflow: clip; pointer-events: none;
 }
 :root:is([data-entrance="standby"], [data-entrance="starting"]) .entrance-aperture { visibility: hidden; }
 :root[data-entrance] .entrance-viewport { --scroll-phase: 0s; position: relative; width: 100%; transform-origin: 0 0; }
-
-:root:is([data-entrance="standby"], [data-entrance="starting"]) .entrance-power {
-  position: fixed; z-index: 3; left: 50%; top: 50%; translate: -50% -50%;
-  display: grid; place-items: center; width: clamp(3.5rem, 5.5vw, 4.5rem); aspect-ratio: 1;
-  padding: 0; border: 1px solid #c3f56b99; border-radius: 50%; color: #c3f56b;
-  background: radial-gradient(ellipse at 50% 20%, #293127, #101611 72%);
-  box-shadow: inset 0 1px 1px #eeffcd24, 0 0 0 5px #c3f56b09, 0 0 26px #a5d66d18;
-  transition: border-color .16s, box-shadow .16s;
-}
-.entrance-power svg { width: 46%; height: 46%; }
-.entrance-power span {
-  position: absolute; inset: calc(100% + .8rem) auto auto 50%; transform: translateX(-50%);
-  white-space: nowrap; color: #f2f6e8; font: .71rem/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase;
-}
-.entrance-power .power-starting, :root[data-entrance="starting"] .power-ready { display: none; }
-:root[data-entrance="starting"] .power-starting { display: inline; }
-:root[data-entrance="starting"] .entrance-power { cursor: progress; }
-:root[data-entrance="standby"] .entrance-power:is(:hover, :focus-visible) {
-  border-color: #d4ff98; box-shadow: inset 0 0 16px #a7dc6c12, 0 0 0 5px #c3f56b14, 0 0 32px #a5d66d32;
-}
-.entrance-power:focus-visible { outline: 2px solid #e8ffca; outline-offset: 6px; }
-.entrance-power:active svg { transform: scale(.92); }
-@media (max-width: 700px) { .entrance-device-slot { width: min(100vw, 103svh); } }

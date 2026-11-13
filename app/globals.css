@@ -105,20 +105,11 @@ figure, h1, h2, h3, h4, p { margin: 0; }
 .section-title { font-weight: 600; font-size: clamp(2.45rem, 4.2vw, 4.3rem); line-height: 1.06; letter-spacing: -.068em; margin: .6rem 0 2rem; }
 .project-grid, .service-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: clamp(1rem, 2.2vw, 2rem); }
 .project-card { min-width: 0; }
-.project-card > a { display: block; border-radius: 9px; }
-.project-art { aspect-ratio: 1.6; isolation: isolate; display: grid; place-items: center; overflow: hidden; border-radius: 9px; position: relative; }
-.project-art::before { content: ""; position: absolute; inset: 0; z-index: -1; background-image: linear-gradient(130deg, transparent 53%, #ffffff15 53.2%, transparent 53.6%), linear-gradient(130deg, transparent 82%, #ffffff15 82.2%, transparent 82.6%); }
-.project-art-consultia { background: linear-gradient(125deg,#87bdad,#d1eadd); }
-.project-art-trento-consulting { background: linear-gradient(125deg,#baa58d,#e4d8c7); }
-.shot-frame { width: 87%; border-radius: 5px; overflow: hidden; box-shadow: 0 12px 24px -7px #15242673; transform: perspective(850px) rotateY(-6deg) rotateX(3deg); }
-.project-link:is(:hover,:focus-visible,:active,[data-pointing]) { --case-active: 1; --case-ink: var(--accent); }
-.project-link:is(:hover,:focus-visible,:active,[data-pointing]) .project-art { outline: 2px solid var(--accent); outline-offset: -2px; }
-.project-art::after { content: ""; pointer-events: none; position: absolute; inset: 0; background: radial-gradient(ellipse at var(--spot-x,50%) var(--spot-y,35%), #ffffff38, transparent 56%, #10201645); opacity: var(--case-active,0); }
-.case-invitation { position: absolute; z-index: 1; right: .75rem; bottom: .75rem; display: inline-flex; align-items: center; gap: .45rem; border-radius: 4px; background: #c3f56b; color: #18230c; padding: .45rem .75rem; font-size: .8rem; font-weight: 720; box-shadow: 0 4px 14px #10201642; pointer-events: none; opacity: var(--case-active,0); }
-.shot-frame img { display: block; width: 100%; height: auto; }
-.window-bar { display: flex; align-items: center; gap: 3px; height: 12px; padding-left: 6px; background: #26313c; }
-.window-bar i { width: 3px; height: 3px; background: #a0a8b0; border-radius: 50%; }
-.project-body { padding: 1.28rem 0 .6rem; }
+.project-link, .project-preview img { display: block; }
+.project-preview { position: relative; }
+.project-preview img { width: 100%; height: auto; }
+.project-link:is(:hover,:focus-visible,:active,[data-pointing]) { --case-ink: var(--accent); }
+.project-body { padding: max(1.28rem, 7%) 0 .6rem; }
 .project-category, .experience-date { font: .65rem/1.6 var(--mono); text-transform: uppercase; letter-spacing: .055em; color: var(--muted); }
 .project-body h3 { display: flex; align-items: center; justify-content: space-between; font-size: clamp(1.65rem,2.4vw,2.3rem); letter-spacing: -.055em; font-weight: 610; margin-block: .25rem .4rem; color: var(--case-ink,var(--fg)); }
 .card-link { color: var(--accent); display: inline-flex; }
@@ -187,7 +178,6 @@ figure, h1, h2, h3, h4, p { margin: 0; }
   .project-grid, .service-grid { grid-template-columns: 1fr; gap: 1.7rem; }
   .section-block { padding-block: 3.4rem; }
   .section-title { margin-bottom: 1.5rem; }
-  .project-art { aspect-ratio: 1.75; }
   .about-grid, .contact-row { grid-template-columns: 1fr; gap: 2.4rem; }
   .service-grid { margin-top: 1.6rem; }
   .service-grid article { padding-top: 1.2rem; }
@@ -211,21 +201,27 @@ figure, h1, h2, h3, h4, p { margin: 0; }
 .desktop-nav a::after { content: ""; position: absolute; bottom: 6px; left: 0; right: 0; height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .2s ease-out; }
 .desktop-nav a:is(:hover,:focus-visible)::after { transform: scaleX(1); }
 
-:root[data-motion="on"] .project-art { transition: transform .24s ease-out; }
-:root[data-motion="on"] .project-art::after {
-  --spot-x: calc(50% + var(--pointer-x,0) * 50%);
-  --spot-y: calc(50% + var(--pointer-y,0) * 50%);
+:root[data-motion="on"] .project-preview {
+  transform: perspective(850px) rotateY(-6deg) rotateX(3deg);
+  box-shadow: 0 12px 24px -7px #15242673;
+  transition: transform .24s cubic-bezier(.2,.75,.25,1), box-shadow .24s ease-out;
+}
+:root[data-motion="on"] .project-preview::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at calc(50% + var(--pointer-x, 0) * 50%) calc(50% + var(--pointer-y, 0) * 50%), #ffffff38, transparent 56%, #10201645);
+  opacity: 0;
   transition: opacity .2s ease-out;
 }
-:root[data-motion="on"] .shot-frame { transition: transform .24s cubic-bezier(.2,.75,.25,1), box-shadow .24s ease-out; }
-:root[data-motion="on"] .case-invitation { transform: translateY(10px); transition: transform .22s ease-out, opacity .18s ease-out; }
-:root[data-motion="on"] .project-link:is(:hover,:focus-visible,:active,[data-pointing]) {
-  & .project-art { transform: translateY(-6px); }
-  & .case-invitation { transform: translateY(0); }
-  & .shot-frame {
-    transform: perspective(700px) rotateX(calc(4deg - var(--pointer-y,0) * 10deg)) rotateY(calc(4deg + var(--pointer-x,0) * 13deg)) translateY(-3%) scale(1.10);
-    box-shadow: 0 22px 32px -8px #10201690;
-  }
+:root[data-motion="on"] .project-link:is([data-pointing], :focus-visible, :active) .project-preview {
+  transform: translateY(-6px) perspective(700px)
+    rotateX(calc(4deg - var(--pointer-y, 0) * 10deg))
+    rotateY(calc(4deg + var(--pointer-x, 0) * 13deg))
+    translateY(-3%) scale(1.10);
+  box-shadow: 0 22px 32px -8px #10201690;
+  &::after { opacity: 1; }
 }
 @supports (animation-timeline: view()) and (animation-range: entry 0% entry 100%) {
   :root[data-motion="on"] .project-card {
