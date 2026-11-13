@@ -93,7 +93,7 @@ export default async function CasePage({ params }: PageProps) {
             <p className="case-summary">{copy.summary}</p>
           </header>
 
-          <figure className={`case-figure case-figure-${project.slug}`}>
+          <figure className="case-figure">
             <div className="case-screen">
               <Image
                 src={`/work/${project.slug}.webp`}

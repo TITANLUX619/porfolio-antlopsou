@@ -20,6 +20,11 @@ type Project = Record<Locale, ProjectCopy> & {
   external?: { url: string; label: Record<Locale, string> };
 };
 
+const trentoLandingAlt = {
+  es: "Portada de Trento Desarrollo con el nombre del grupo junto a un cuaderno de cubierta negra y letras doradas.",
+  en: "Trento Desarrollo homepage with the group’s name beside a black book with gold lettering.",
+};
+
 export const projects: Project[] = [
   {
     slug: "consultia",
@@ -55,36 +60,33 @@ export const projects: Project[] = [
     },
   },
   {
-    slug: "trento-consulting",
-    name: "Trento Consulting",
+    slug: "trento-desarrollo",
+    name: "Trento Desarrollo",
     stack: ["Next.js", "TypeScript", "CSS Modules"],
     width: 1440,
     height: 900,
     preview: {
-      src: "/work/trento-consulting.webp", width: 1440, height: 900,
-      alt: {
-        es: "Portada de Trento Consulting con el titular «Tu clínica, con visión de negocio» junto a la recepción de una clínica.",
-        en: "Trento Consulting homepage with its consultancy headline alongside a clinic reception.",
-      },
+      src: "/work/trento-desarrollo.webp", width: 1440, height: 900,
+      alt: trentoLandingAlt,
     },
-    external: { url: "https://trentodesarrollo.es/", label: { es: "Visitar trentodesarrollo.es", en: "Visit trentodesarrollo.es" } },
+    external: { url: "https://www.trentodesarrollo.es/", label: { es: "Visitar trentodesarrollo.es", en: "Visit trentodesarrollo.es" } },
     es: {
-      category: "Web corporativa · Consultoría",
-      summary: "Web de consultoría para clínicas estéticas con un simulador de margen por hora de tratamiento.",
-      alt: "Portada de Trento Consulting con la recepción de una clínica y los accesos al método de trabajo y al contacto.",
-      caption: "Portada de la web publicada de Trento Consulting.",
-      context: "Trento asesora a clínicas estéticas sobre márgenes, equipo y crecimiento. Su web debía ayudar a la dirección de una clínica a entender el servicio y a identificar qué le interesaba consultar.",
-      implementation: "Diseñé y desarrollé el sitio en Next.js. Organicé los servicios y el método de trabajo, y programé una calculadora que relaciona la tarifa, el coste variable y la duración de cada tratamiento.",
-      result: "Una clínica puede comparar el margen por hora de distintos escenarios antes de contactar con la consultora. El recorrido funciona tanto en móvil como en escritorio.",
+      category: "Web corporativa · Grupo empresarial",
+      summary: "La web del grupo reúne Consulting, Investing e Inmobiliario en un cuaderno interactivo.",
+      alt: trentoLandingAlt.es,
+      caption: "Al abrir el cuaderno de la portada se despliega el índice de departamentos.",
+      context: "Trento Desarrollo nació con la consultoría para clínicas y amplió su alcance a la inversión y al sector inmobiliario. La web debía reflejar esa estructura y dar a cada departamento un acceso propio bajo la marca del grupo.",
+      implementation: "Diseñé y desarrollé la portada en Next.js como un cuaderno que se puede hojear. El índice permite saltar a cualquier departamento y las páginas responden al ratón, al teclado y a los gestos táctiles.",
+      result: "Cada departamento tiene una página que se puede compartir por separado. Consulting da acceso a los servicios y cuadernos para clínicas. Las páginas de Investing e Inmobiliario presentan las dos áreas que el grupo está preparando.",
     },
     en: {
-      category: "Corporate website · Consulting",
-      summary: "A management consultancy website for aesthetic clinics, with a calculator for comparing treatment margins per hour.",
-      alt: "Trento Consulting homepage with a clinic reception and links to the consultancy’s approach and contact details.",
-      caption: "Homepage of the published Trento Consulting website.",
-      context: "Trento advises aesthetic clinics on margins, staffing and growth. Clinic directors needed to understand the services and decide which business question to bring to a first conversation.",
-      implementation: "I designed and built the site in Next.js. I organised the services and the consultancy’s approach, and developed a calculator that takes a treatment’s fee, variable cost and duration.",
-      result: "A clinic director can compare hourly margins across several scenarios before contacting the consultancy. The same workflow is available on mobile and desktop.",
+      category: "Corporate website · Business group",
+      summary: "An interactive book introduces the group’s Consulting, Investing and Inmobiliario divisions.",
+      alt: trentoLandingAlt.en,
+      caption: "The book on the homepage opens to a contents page for all three divisions.",
+      context: "Trento Desarrollo brings together consulting for aesthetic clinics, investment and real estate. Its website needed to explain each division’s work and give it a distinct place within the group.",
+      implementation: "I designed and built the Next.js homepage as a book visitors can leaf through. They can jump to a division from the contents page or turn the pages with a mouse, keyboard or swipe.",
+      result: "Each division has a page visitors can share directly. Consulting offers services and guides for clinics. Investing and Inmobiliario introduce the group’s plans for investment and real estate.",
     },
   },
 ];
